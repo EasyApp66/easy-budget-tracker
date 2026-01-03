@@ -1,11 +1,24 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useApp } from '@/contexts/AppContext';
 
 const Index = () => {
+  const navigate = useNavigate();
+  const { isLoggedIn } = useApp();
+
+  useEffect(() => {
+    // Redirect based on auth state
+    if (isLoggedIn) {
+      navigate('/budget');
+    } else {
+      navigate('/welcome');
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="animate-pulse">
+        <p className="text-display text-4xl text-primary">EASY BUDGET</p>
       </div>
     </div>
   );
