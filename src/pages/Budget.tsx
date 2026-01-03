@@ -190,7 +190,7 @@ export default function Budget() {
               `}
             >
               <div className="flex justify-between items-start">
-                <p className="text-label text-sm text-foreground leading-tight flex-1 pr-2">
+                <p className="text-label text-base text-foreground leading-tight flex-1 pr-2">
                   {expense.name}
                 </p>
                 <button
