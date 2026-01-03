@@ -89,8 +89,22 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [language, setLanguage] = useState<'DE' | 'EN'>('DE');
-  const [months, setMonths] = useState<Month[]>([]);
-  const [activeMonthId, setActiveMonthId] = useState<string | null>(null);
+  const [months, setMonths] = useState<Month[]>(() => {
+    const saved = localStorage.getItem('easybudget_months');
+    if (saved) {
+      return JSON.parse(saved);
+    }
+    // Default months
+    return [
+      { id: 'default-jan', name: 'JANUAR', pinned: false, budget: 0, expenses: [] },
+      { id: 'default-feb', name: 'FEBRUAR', pinned: false, budget: 0, expenses: [] },
+    ];
+  });
+  const [activeMonthId, setActiveMonthId] = useState<string | null>(() => {
+    const saved = localStorage.getItem('easybudget_activeMonth');
+    if (saved) return saved;
+    return 'default-jan';
+  });
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [showPremiumPopup, setShowPremiumPopup] = useState(false);
 
@@ -107,9 +121,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setUser(parsedUser);
       setIsLoggedIn(true);
     }
-    if (savedMonths) setMonths(JSON.parse(savedMonths));
+    // Months are already loaded in useState initializer
     if (savedSubscriptions) setSubscriptions(JSON.parse(savedSubscriptions));
-    if (savedActiveMonth) setActiveMonthId(savedActiveMonth);
+    // Active month is already loaded in useState initializer
     if (savedLanguage) setLanguage(savedLanguage as 'DE' | 'EN');
   }, []);
 
