@@ -138,9 +138,9 @@ export default function Budget() {
               onTouchStart={() => handleLongPressStart('month', month.id)}
               onTouchEnd={handleLongPressEnd}
               className={`
-                flex items-center gap-2 px-4 py-2.5 rounded-full flex-shrink-0 haptic-tap transition-all
+                flex items-center gap-2 px-4 py-2.5 rounded-full flex-shrink-0 haptic-tap transition-all duration-300
                 ${month.id === activeMonthId ? 'bg-primary text-primary-foreground' : 'bg-secondary text-foreground'}
-                ${month.pinned ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''}
+                ${month.pinned ? 'border-2 border-primary' : 'border-2 border-transparent'}
               `}
             >
               <span className={`text-label text-sm ${month.id === activeMonthId ? 'text-primary-foreground' : ''}`}>{month.name}</span>
