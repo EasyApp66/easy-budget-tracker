@@ -4,24 +4,35 @@ import { X } from 'lucide-react';
 interface AddModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAdd: (name: string, amount: number) => boolean;
+  onAdd: (name: string, amount?: number) => boolean;
   title: string;
   namePlaceholder: string;
+  hideAmount?: boolean;
 }
 
-export function AddModal({ isOpen, onClose, onAdd, title, namePlaceholder }: AddModalProps) {
+export function AddModal({ isOpen, onClose, onAdd, title, namePlaceholder, hideAmount = false }: AddModalProps) {
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
 
   if (!isOpen) return null;
 
   const handleSubmit = () => {
-    if (name && amount) {
-      const success = onAdd(name.toUpperCase(), parseFloat(amount) || 0);
-      if (success) {
-        setName('');
-        setAmount('');
-        onClose();
+    if (hideAmount) {
+      if (name) {
+        const success = onAdd(name.toUpperCase());
+        if (success) {
+          setName('');
+          onClose();
+        }
+      }
+    } else {
+      if (name && amount) {
+        const success = onAdd(name.toUpperCase(), parseFloat(amount) || 0);
+        if (success) {
+          setName('');
+          setAmount('');
+          onClose();
+        }
       }
     }
   };
@@ -46,13 +57,15 @@ export function AddModal({ isOpen, onClose, onAdd, title, namePlaceholder }: Add
             className="w-full bg-card rounded-xl px-4 py-4 text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 transition-all text-label"
           />
           
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder="Betrag"
-            className="w-full bg-card rounded-xl px-4 py-4 text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 transition-all text-lg"
-          />
+          {!hideAmount && (
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="Betrag"
+              className="w-full bg-card rounded-xl px-4 py-4 text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 transition-all text-lg"
+            />
+          )}
         </div>
 
         <div className="flex gap-3 mt-6">

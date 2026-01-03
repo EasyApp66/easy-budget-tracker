@@ -120,7 +120,7 @@ export default function Budget() {
         <div className="flex items-center gap-3 overflow-x-auto py-2 animate-slide-up" style={{ animationDelay: '100ms' }}>
           <button
             onClick={() => setShowAddMonth(true)}
-            className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0 haptic-tap"
+            className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0 haptic-tap sticky left-0 z-10"
           >
             <Plus className="w-5 h-5 text-primary-foreground" strokeWidth={3} />
           </button>
@@ -139,20 +139,20 @@ export default function Budget() {
               onTouchEnd={handleLongPressEnd}
               className={`
                 flex items-center gap-2 px-4 py-2.5 rounded-full flex-shrink-0 haptic-tap transition-all
-                ${month.id === activeMonthId ? 'bg-card' : 'bg-secondary'}
-                ${month.pinned ? 'ring-2 ring-primary' : ''}
+                ${month.id === activeMonthId ? 'bg-primary text-primary-foreground' : 'bg-secondary text-foreground'}
+                ${month.pinned ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''}
               `}
             >
-              <span className="text-label text-sm">{month.name}</span>
+              <span className={`text-label text-sm ${month.id === activeMonthId ? 'text-primary-foreground' : ''}`}>{month.name}</span>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   if ('vibrate' in navigator) navigator.vibrate(10);
                   deleteMonth(month.id);
                 }}
-                className="w-5 h-5 rounded-full bg-destructive flex items-center justify-center"
+                className="flex items-center justify-center"
               >
-                <X className="w-3 h-3 text-foreground" />
+                <X className="w-5 h-5 text-destructive" strokeWidth={3} />
               </button>
             </button>
           ))}
@@ -182,9 +182,9 @@ export default function Budget() {
                     if ('vibrate' in navigator) navigator.vibrate(10);
                     deleteExpense(expense.id);
                   }}
-                  className="w-6 h-6 rounded-full bg-destructive flex items-center justify-center flex-shrink-0"
+                  className="flex items-center justify-center flex-shrink-0"
                 >
-                  <X className="w-3.5 h-3.5 text-foreground" />
+                  <X className="w-6 h-6 text-destructive" strokeWidth={3} />
                 </button>
               </div>
               <p className="text-display text-3xl text-foreground text-right">
@@ -224,8 +224,9 @@ export default function Budget() {
         isOpen={showAddMonth}
         onClose={() => setShowAddMonth(false)}
         onAdd={(name) => addMonth(name)}
-        title="Neuer Monat"
+        title="Neuer Eintrag"
         namePlaceholder="Name (z.B. JANUAR)"
+        hideAmount
       />
 
       {/* Month Context Menu */}
