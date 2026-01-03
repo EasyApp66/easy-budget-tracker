@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { X, Plus } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { X, Plus, Pencil } from 'lucide-react';
 import { useApp } from '@/contexts/AppContext';
 import { BottomNav } from '@/components/BottomNav';
 import { AddModal } from '@/components/AddModal';
@@ -34,7 +34,15 @@ export default function Budget() {
   const [showEditName, setShowEditName] = useState(false);
   const [showEditAmount, setShowEditAmount] = useState(false);
   const [showEditBudget, setShowEditBudget] = useState(false);
+  const [showEditTitle, setShowEditTitle] = useState(false);
+  const [budgetTitle, setBudgetTitle] = useState(() => {
+    return localStorage.getItem('easybudget_title') || 'BUDGET';
+  });
   const [editTarget, setEditTarget] = useState<'month' | 'expense' | null>(null);
+
+  useEffect(() => {
+    localStorage.setItem('easybudget_title', budgetTitle);
+  }, [budgetTitle]);
 
   const longPressTimer = useRef<NodeJS.Timeout | null>(null);
 
@@ -90,14 +98,22 @@ export default function Budget() {
     <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="px-4 pt-6 space-y-4">
         {/* Budget Card */}
-        <div 
-          className="bg-card rounded-2xl p-5 animate-slide-up cursor-pointer"
-          onClick={() => setShowEditBudget(true)}
-        >
-          <p className="text-label text-lg text-foreground">BUDGET</p>
-          <p className="text-display text-5xl text-foreground text-right mt-4">
-            {formatNumber(activeMonth?.budget || 0)}
-          </p>
+        <div className="bg-card rounded-2xl p-5 animate-slide-up">
+          <div 
+            className="flex items-center gap-2 cursor-pointer group"
+            onClick={() => setShowEditTitle(true)}
+          >
+            <p className="text-label text-lg text-foreground">{budgetTitle}</p>
+            <Pencil className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+          </div>
+          <div 
+            className="cursor-pointer"
+            onClick={() => setShowEditBudget(true)}
+          >
+            <p className="text-display text-5xl text-foreground text-right mt-4">
+              {formatNumber(activeMonth?.budget || 0)}
+            </p>
+          </div>
         </div>
 
         {/* Total & Remaining Card */}
@@ -169,8 +185,8 @@ export default function Budget() {
               onTouchStart={() => handleLongPressStart('expense', expense.id)}
               onTouchEnd={handleLongPressEnd}
               className={`
-                bg-card rounded-2xl p-4 aspect-square flex flex-col justify-between haptic-tap transition-all
-                ${expense.pinned ? 'ring-2 ring-primary' : ''}
+                bg-card rounded-2xl p-4 aspect-square flex flex-col justify-between haptic-tap transition-all duration-300
+                ${expense.pinned ? 'border-2 border-primary' : 'border-2 border-transparent'}
               `}
             >
               <div className="flex justify-between items-start">
@@ -340,6 +356,15 @@ export default function Budget() {
         title="Budget anpassen"
         currentValue={activeMonth?.budget || 0}
         type="number"
+      />
+
+      <EditModal
+        isOpen={showEditTitle}
+        onClose={() => setShowEditTitle(false)}
+        onSave={(value) => setBudgetTitle(String(value))}
+        title="Titel anpassen"
+        currentValue={budgetTitle}
+        type="text"
       />
 
       <PremiumPopup />

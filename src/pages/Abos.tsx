@@ -115,8 +115,8 @@ export default function Abos() {
               onMouseUp={handleLongPressEnd}
               onMouseLeave={handleLongPressEnd}
               className={`
-                bg-card rounded-2xl p-5 haptic-tap transition-all
-                ${sub.pinned ? 'ring-2 ring-primary' : ''}
+                bg-card rounded-2xl p-5 haptic-tap transition-all duration-300
+                ${sub.pinned ? 'border-2 border-primary' : 'border-2 border-transparent'}
                 ${swipedId === sub.id ? 'translate-x-[-100px] opacity-50' : 'translate-x-0'}
               `}
             >
