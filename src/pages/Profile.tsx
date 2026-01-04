@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   User, 
@@ -14,20 +14,47 @@ import {
   Bug, 
   Lightbulb, 
   Heart,
-  ChevronRight
+  ChevronRight,
+  Pencil
 } from 'lucide-react';
 import { useApp } from '@/contexts/AppContext';
 import { BottomNav } from '@/components/BottomNav';
 import { PremiumPopup } from '@/components/PremiumPopup';
+import { 
+  AGBDialog, 
+  NutzungsbedingungenDialog, 
+  DatenschutzDialog, 
+  ImpressumDialog 
+} from '@/components/LegalDialogs';
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { user, logout, language, toggleLanguage, setShowPremiumPopup } = useApp();
+  const { user, logout, language, toggleLanguage, setShowPremiumPopup, updateUsername } = useApp();
+  
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [editedName, setEditedName] = useState(user?.username || '');
+  const [showAGB, setShowAGB] = useState(false);
+  const [showNutzungsbedingungen, setShowNutzungsbedingungen] = useState(false);
+  const [showDatenschutz, setShowDatenschutz] = useState(false);
+  const [showImpressum, setShowImpressum] = useState(false);
 
   const handleLogout = () => {
     if ('vibrate' in navigator) navigator.vibrate(10);
     logout();
     navigate('/');
+  };
+
+  const handlePremiumRestore = () => {
+    if ('vibrate' in navigator) navigator.vibrate(10);
+    logout();
+    navigate('/');
+  };
+
+  const handleSaveName = () => {
+    if (editedName.trim()) {
+      updateUsername(editedName.trim());
+    }
+    setIsEditingName(false);
   };
 
   const menuItems = [
@@ -46,7 +73,7 @@ export default function Profile() {
     {
       icon: RefreshCw,
       label: 'Premium Wiederherstellen',
-      onClick: () => {},
+      onClick: handlePremiumRestore,
       iconColor: 'text-primary',
     },
     {
@@ -58,25 +85,25 @@ export default function Profile() {
     {
       icon: FileText,
       label: 'AGB',
-      onClick: () => {},
+      onClick: () => setShowAGB(true),
       iconColor: 'text-muted-foreground',
     },
     {
       icon: Shield,
       label: 'Nutzungsbedingungen',
-      onClick: () => {},
+      onClick: () => setShowNutzungsbedingungen(true),
       iconColor: 'text-muted-foreground',
     },
     {
       icon: Lock,
       label: 'Datenschutz',
-      onClick: () => {},
+      onClick: () => setShowDatenschutz(true),
       iconColor: 'text-muted-foreground',
     },
     {
       icon: Building,
       label: 'Impressum',
-      onClick: () => {},
+      onClick: () => setShowImpressum(true),
       iconColor: 'text-muted-foreground',
     },
     {
@@ -115,14 +142,36 @@ export default function Profile() {
             <User className="w-12 h-12 text-primary-foreground" />
           </div>
 
-          {/* Username */}
-          <h2 className="text-display text-2xl text-foreground text-center mb-1">
-            {user?.username || 'User'}
-          </h2>
+          {/* Editable Username */}
+          {isEditingName ? (
+            <input
+              type="text"
+              value={editedName}
+              onChange={(e) => setEditedName(e.target.value)}
+              onBlur={handleSaveName}
+              onKeyDown={(e) => e.key === 'Enter' && handleSaveName()}
+              autoFocus
+              className="text-display text-2xl text-foreground text-center mb-1 bg-transparent border-b-2 border-primary outline-none"
+              placeholder="Name eingeben"
+            />
+          ) : (
+            <button
+              onClick={() => {
+                setEditedName(user?.username || '');
+                setIsEditingName(true);
+              }}
+              className="flex items-center gap-2 mb-1 group"
+            >
+              <h2 className="text-display text-2xl text-foreground text-center">
+                {user?.username || 'Name eingeben'}
+              </h2>
+              <Pencil className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+            </button>
+          )}
 
-          {/* Email */}
-          <p className="text-muted-foreground text-center mb-4">
-            {user?.email || 'email@example.com'}
+          {/* Hint text */}
+          <p className="text-muted-foreground text-sm text-center mb-4">
+            Tippe um Namen zu ändern
           </p>
 
           {/* Premium Status */}
@@ -164,6 +213,12 @@ export default function Profile() {
 
       <BottomNav onAddClick={() => {}} />
       <PremiumPopup />
+      
+      {/* Legal Dialogs */}
+      <AGBDialog open={showAGB} onOpenChange={setShowAGB} />
+      <NutzungsbedingungenDialog open={showNutzungsbedingungen} onOpenChange={setShowNutzungsbedingungen} />
+      <DatenschutzDialog open={showDatenschutz} onOpenChange={setShowDatenschutz} />
+      <ImpressumDialog open={showImpressum} onOpenChange={setShowImpressum} />
     </div>
   );
 }
