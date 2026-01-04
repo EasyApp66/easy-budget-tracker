@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Apple } from 'lucide-react';
+import { AGBDialog, NutzungsbedingungenDialog, DatenschutzDialog } from '@/components/LegalDialogs';
 
 export default function Welcome() {
   const navigate = useNavigate();
+  const [showNutzungsbedingungen, setShowNutzungsbedingungen] = useState(false);
+  const [showDatenschutz, setShowDatenschutz] = useState(false);
+  const [showAGB, setShowAGB] = useState(false);
 
   const handleEmailClick = () => {
     if ('vibrate' in navigator) navigator.vibrate(10);
@@ -73,14 +77,43 @@ export default function Welcome() {
       <div className="text-center text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: '400ms' }}>
         <p>
           Indem du fortfährst, bestätigst du, dass du die{' '}
-          <button className="text-primary underline">Nutzungsbedingungen</button>
+          <button 
+            onClick={() => setShowNutzungsbedingungen(true)}
+            className="text-primary underline"
+          >
+            Nutzungsbedingungen
+          </button>
           {' '}und die{' '}
-          <button className="text-primary underline">Datenschutzerklärung</button>
+          <button 
+            onClick={() => setShowDatenschutz(true)}
+            className="text-primary underline"
+          >
+            Datenschutzerklärung
+          </button>
           {' '}und die{' '}
-          <button className="text-primary underline">AGBs</button>
+          <button 
+            onClick={() => setShowAGB(true)}
+            className="text-primary underline"
+          >
+            AGBs
+          </button>
           {' '}gelesen hast.
         </p>
       </div>
+
+      {/* Legal Dialogs */}
+      <NutzungsbedingungenDialog 
+        open={showNutzungsbedingungen} 
+        onOpenChange={setShowNutzungsbedingungen} 
+      />
+      <DatenschutzDialog 
+        open={showDatenschutz} 
+        onOpenChange={setShowDatenschutz} 
+      />
+      <AGBDialog 
+        open={showAGB} 
+        onOpenChange={setShowAGB} 
+      />
     </div>
   );
 }
