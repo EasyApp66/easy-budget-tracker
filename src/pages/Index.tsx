@@ -1,19 +1,19 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useApp } from '@/contexts/AppContext';
+import { useNavigation } from '@/contexts/NavigationContext';
 
 const Index = () => {
-  const navigate = useNavigate();
+  const { navigateTo } = useNavigation();
   const { isLoggedIn } = useApp();
 
   useEffect(() => {
     // Redirect based on auth state
     if (isLoggedIn) {
-      navigate('/budget');
+      navigateTo('/budget');
     } else {
-      navigate('/welcome');
+      navigateTo('/welcome');
     }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, navigateTo]);
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center">

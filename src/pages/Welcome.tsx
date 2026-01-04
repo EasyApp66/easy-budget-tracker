@@ -1,18 +1,18 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Mail, Apple } from 'lucide-react';
+import { useNavigation } from '@/contexts/NavigationContext';
 
 export default function Welcome() {
-  const navigate = useNavigate();
+  const { navigateTo } = useNavigation();
 
   const handleEmailClick = () => {
     if ('vibrate' in navigator) navigator.vibrate(10);
-    navigate('/login');
+    navigateTo('/login');
   };
 
   const handleAppleClick = () => {
     if ('vibrate' in navigator) navigator.vibrate(10);
-    navigate('/login');
+    navigateTo('/login');
   };
 
   return (

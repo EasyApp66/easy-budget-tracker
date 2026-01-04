@@ -1,13 +1,14 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { DollarSign, RefreshCw, User, Plus } from 'lucide-react';
+import { useNavigation } from '@/contexts/NavigationContext';
 
 interface BottomNavProps {
   onAddClick: () => void;
 }
 
 export function BottomNav({ onAddClick }: BottomNavProps) {
-  const navigate = useNavigate();
+  const { navigateTo } = useNavigation();
   const location = useLocation();
 
   const navItems = [
@@ -21,7 +22,7 @@ export function BottomNav({ onAddClick }: BottomNavProps) {
     if ('vibrate' in navigator) {
       navigator.vibrate(10);
     }
-    navigate(path);
+    navigateTo(path);
   };
 
   const handleAddClick = () => {
