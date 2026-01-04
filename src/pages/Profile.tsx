@@ -226,7 +226,31 @@ export default function Profile() {
         </div>
       </div>
 
-      <BottomNav onAddClick={() => {}} />
+      <BottomNav onAddClick={async () => {
+        if ('vibrate' in navigator) navigator.vibrate(10);
+        const shareData = {
+          title: 'EasyBudget',
+          text: language === 'DE' 
+            ? 'Schau dir diese tolle Budget-App an!' 
+            : 'Check out this great budget app!',
+          url: window.location.origin,
+        };
+        
+        if (navigator.share && navigator.canShare?.(shareData)) {
+          try {
+            await navigator.share(shareData);
+          } catch (err) {
+            if ((err as Error).name !== 'AbortError') {
+              // User cancelled, no action needed
+              await navigator.clipboard.writeText(window.location.origin);
+              toast.success(language === 'DE' ? 'Link kopiert!' : 'Link copied!');
+            }
+          }
+        } else {
+          await navigator.clipboard.writeText(window.location.origin);
+          toast.success(language === 'DE' ? 'Link kopiert!' : 'Link copied!');
+        }
+      }} />
       <PremiumPopup />
       
       {/* Legal Dialogs */}
