@@ -147,6 +147,20 @@
     animation: press 0.1s ease-out forwards;
   }
 
+  /* Page transition animations */
+  .page-transition {
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  .page-transition.enter {
+    animation: slideInFromRight 0.2s ease-out forwards;
+  }
+
+  .page-transition.exit {
+    animation: slideOutToLeft 0.15s ease-out forwards;
+  }
+
   /* Haptic simulation - visual feedback */
   .haptic-tap {
     @apply active:scale-95 transition-transform duration-75;
@@ -179,6 +193,28 @@
 @keyframes subtleFadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutToLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
 }
 
 @keyframes press {
