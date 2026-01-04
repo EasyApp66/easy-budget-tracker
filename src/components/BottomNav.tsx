@@ -33,7 +33,7 @@ export function BottomNav({ onAddClick }: BottomNavProps) {
   };
 
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 safe-bottom">
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] safe-bottom">
       <div className="flex items-center gap-1 bg-secondary/80 backdrop-blur-xl rounded-full px-2 py-2 border border-border/20">
         {navItems.map(({ path, icon: Icon, label }) => {
           const isActive = location.pathname === path;
