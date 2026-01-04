@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   User, 
   LogOut, 
@@ -16,18 +17,17 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { useApp } from '@/contexts/AppContext';
-import { useNavigation } from '@/contexts/NavigationContext';
 import { BottomNav } from '@/components/BottomNav';
 import { PremiumPopup } from '@/components/PremiumPopup';
 
 export default function Profile() {
-  const { navigateTo } = useNavigation();
+  const navigate = useNavigate();
   const { user, logout, language, toggleLanguage, setShowPremiumPopup } = useApp();
 
   const handleLogout = () => {
     if ('vibrate' in navigator) navigator.vibrate(10);
     logout();
-    navigateTo('/welcome');
+    navigate('/');
   };
 
   const menuItems = [
