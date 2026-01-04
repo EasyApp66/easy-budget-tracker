@@ -7,6 +7,7 @@ import { AppProvider } from "@/contexts/AppContext";
 import Index from "./pages/Index";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
+import ResetPassword from "./pages/ResetPassword";
 import Budget from "./pages/Budget";
 import Abos from "./pages/Abos";
 import Profile from "./pages/Profile";
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/budget" element={<Budget />} />
             <Route path="/abos" element={<Abos />} />
             <Route path="/profile" element={<Profile />} />
