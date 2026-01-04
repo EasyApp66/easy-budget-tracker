@@ -38,21 +38,21 @@ export default function Profile() {
   const [showDatenschutz, setShowDatenschutz] = useState(false);
   const [showImpressum, setShowImpressum] = useState(false);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     if ('vibrate' in navigator) navigator.vibrate(10);
-    logout();
+    await logout();
     navigate('/');
   };
 
-  const handlePremiumRestore = () => {
+  const handlePremiumRestore = async () => {
     if ('vibrate' in navigator) navigator.vibrate(10);
-    logout();
+    await logout();
     navigate('/');
   };
 
-  const handleSaveName = () => {
+  const handleSaveName = async () => {
     if (editedName.trim()) {
-      updateUsername(editedName.trim());
+      await updateUsername(editedName.trim());
     }
     setIsEditingName(false);
   };

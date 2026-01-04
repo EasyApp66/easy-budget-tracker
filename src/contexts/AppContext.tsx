@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { User, Session } from '@supabase/supabase-js';
 
 export interface Expense {
   id: string;
@@ -22,7 +24,7 @@ export interface Subscription {
   pinned: boolean;
 }
 
-export interface User {
+export interface UserProfile {
   email: string;
   username: string;
   isPremium: boolean;
@@ -31,11 +33,12 @@ export interface User {
 interface AppContextType {
   // Auth state
   isLoggedIn: boolean;
-  user: User | null;
-  login: (email: string, password: string) => boolean;
-  register: (email: string, password: string) => boolean;
-  logout: () => void;
-  updateUsername: (username: string) => void;
+  user: UserProfile | null;
+  isLoading: boolean;
+  login: (email: string, password: string) => Promise<{ error: string | null }>;
+  register: (email: string, password: string) => Promise<{ error: string | null }>;
+  logout: () => Promise<void>;
+  updateUsername: (username: string) => Promise<void>;
   
   // Language
   language: 'DE' | 'EN';
@@ -77,9 +80,6 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const ADMIN_EMAIL = 'mirosnic.ivan@icloud.com';
-const ADMIN_PASSWORD = 'Gmh786cGFxqcmscQfofm#okp?QfEF5K4HM!pR3fo';
-
 const FREE_LIMITS = {
   expenses: 8,
   months: 2,
@@ -87,15 +87,15 @@ const FREE_LIMITS = {
 };
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [language, setLanguage] = useState<'DE' | 'EN'>('DE');
   const [months, setMonths] = useState<Month[]>(() => {
     const saved = localStorage.getItem('easybudget_months');
     if (saved) {
       return JSON.parse(saved);
     }
-    // Default months
     return [
       { id: 'default-jan', name: 'JANUAR', pinned: false, budget: 0, expenses: [] },
       { id: 'default-feb', name: 'FEBRUAR', pinned: false, budget: 0, expenses: [] },
@@ -109,31 +109,74 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [showPremiumPopup, setShowPremiumPopup] = useState(false);
 
+  // Initialize auth
+  useEffect(() => {
+    // Set up auth state listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
+        
+        if (session?.user) {
+          // Defer profile fetch to avoid deadlock
+          setTimeout(() => {
+            fetchUserProfile(session.user.id);
+          }, 0);
+        } else {
+          setUser(null);
+          setIsLoading(false);
+        }
+      }
+    );
+
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session?.user) {
+        fetchUserProfile(session.user.id);
+      } else {
+        setIsLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const fetchUserProfile = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('username, is_premium')
+        .eq('user_id', userId)
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error fetching profile:', error);
+        setUser(null);
+      } else if (data) {
+        const authUser = session?.user;
+        setUser({
+          email: authUser?.email || '',
+          username: data.username || authUser?.email?.split('@')[0] || '',
+          isPremium: data.is_premium || false,
+        });
+      }
+    } catch (err) {
+      console.error('Profile fetch error:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Load from localStorage
   useEffect(() => {
-    const savedUser = localStorage.getItem('easybudget_user');
-    const savedMonths = localStorage.getItem('easybudget_months');
     const savedSubscriptions = localStorage.getItem('easybudget_subscriptions');
-    const savedActiveMonth = localStorage.getItem('easybudget_activeMonth');
     const savedLanguage = localStorage.getItem('easybudget_language');
 
-    if (savedUser) {
-      const parsedUser = JSON.parse(savedUser);
-      setUser(parsedUser);
-      setIsLoggedIn(true);
-    }
-    // Months are already loaded in useState initializer
     if (savedSubscriptions) setSubscriptions(JSON.parse(savedSubscriptions));
-    // Active month is already loaded in useState initializer
     if (savedLanguage) setLanguage(savedLanguage as 'DE' | 'EN');
   }, []);
 
   // Save to localStorage
-  useEffect(() => {
-    if (user) localStorage.setItem('easybudget_user', JSON.stringify(user));
-    else localStorage.removeItem('easybudget_user');
-  }, [user]);
-
   useEffect(() => {
     localStorage.setItem('easybudget_months', JSON.stringify(months));
   }, [months]);
@@ -152,40 +195,64 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const generateId = () => Math.random().toString(36).substr(2, 9);
 
-  const login = (email: string, password: string): boolean => {
-    const isPremium = email === ADMIN_EMAIL && password === ADMIN_PASSWORD;
-    const newUser: User = {
+  const login = async (email: string, password: string): Promise<{ error: string | null }> => {
+    setIsLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({
       email,
-      username: email.split('@')[0],
-      isPremium,
-    };
-    setUser(newUser);
-    setIsLoggedIn(true);
-    return true;
+      password,
+    });
+    
+    if (error) {
+      setIsLoading(false);
+      if (error.message.includes('Invalid login credentials')) {
+        return { error: 'E-Mail oder Passwort ist falsch' };
+      }
+      return { error: error.message };
+    }
+    
+    return { error: null };
   };
 
-  const register = (email: string, password: string): boolean => {
-    const newUser: User = {
+  const register = async (email: string, password: string): Promise<{ error: string | null }> => {
+    setIsLoading(true);
+    const { error } = await supabase.auth.signUp({
       email,
-      username: email.split('@')[0],
-      isPremium: false,
-    };
-    setUser(newUser);
-    setIsLoggedIn(true);
-    return true;
+      password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/`,
+      },
+    });
+    
+    if (error) {
+      setIsLoading(false);
+      if (error.message.includes('already registered')) {
+        return { error: 'Diese E-Mail ist bereits registriert' };
+      }
+      return { error: error.message };
+    }
+    
+    return { error: null };
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await supabase.auth.signOut();
     setUser(null);
-    setIsLoggedIn(false);
-    localStorage.removeItem('easybudget_user');
+    setSession(null);
   };
 
-  const updateUsername = (username: string) => {
-    if (user) {
+  const updateUsername = async (username: string) => {
+    if (!session?.user) return;
+    
+    const { error } = await supabase
+      .from('profiles')
+      .update({ username })
+      .eq('user_id', session.user.id);
+    
+    if (!error && user) {
       setUser({ ...user, username });
     }
   };
+
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'DE' ? 'EN' : 'DE');
@@ -388,10 +455,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     ));
   };
 
+  const isLoggedIn = !!session;
+
   return (
     <AppContext.Provider value={{
       isLoggedIn,
       user,
+      isLoading,
       login,
       register,
       logout,

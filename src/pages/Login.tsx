@@ -54,7 +54,7 @@ export default function Login() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if ('vibrate' in navigator) navigator.vibrate(10);
     setError('');
 
@@ -63,16 +63,33 @@ export default function Login() {
       return;
     }
 
+    if (password.length < 6) {
+      setError('Passwort muss mindestens 6 Zeichen lang sein');
+      return;
+    }
+
+    setIsLoading(true);
+
     if (isRegister) {
       if (password !== confirmPassword) {
         setError('Passwörter stimmen nicht überein');
+        setIsLoading(false);
         return;
       }
-      if (register(email, password)) {
+      const { error } = await register(email, password);
+      if (error) {
+        setError(error);
+        setIsLoading(false);
+      } else {
+        toast.success('Konto erfolgreich erstellt!');
         navigate('/budget');
       }
     } else {
-      if (login(email, password)) {
+      const { error } = await login(email, password);
+      if (error) {
+        setError(error);
+        setIsLoading(false);
+      } else {
         navigate('/budget');
       }
     }
@@ -187,9 +204,10 @@ export default function Login() {
 
             <button
               onClick={handleSubmit}
-              className="w-full bg-primary text-primary-foreground font-bold text-lg py-5 rounded-2xl haptic-tap transition-all active:scale-98"
+              disabled={isLoading}
+              className="w-full bg-primary text-primary-foreground font-bold text-lg py-5 rounded-2xl haptic-tap transition-all active:scale-98 disabled:opacity-50"
             >
-              {isRegister ? 'Registrieren' : 'Anmelden'}
+              {isLoading ? 'Wird geladen...' : isRegister ? 'Registrieren' : 'Anmelden'}
             </button>
 
             <button
