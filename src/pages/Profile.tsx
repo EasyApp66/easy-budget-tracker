@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { 
   User, 
   LogOut, 
@@ -20,15 +20,19 @@ import {
 import { useApp } from '@/contexts/AppContext';
 import { BottomNav } from '@/components/BottomNav';
 import { PremiumPopup } from '@/components/PremiumPopup';
+import { FeedbackModal } from '@/components/FeedbackModal';
+import { DonationModal } from '@/components/DonationModal';
 import { 
   AGBDialog, 
   NutzungsbedingungenDialog, 
   DatenschutzDialog, 
   ImpressumDialog 
 } from '@/components/LegalDialogs';
+import { toast } from 'sonner';
 
 export default function Profile() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { user, logout, language, toggleLanguage, setShowPremiumPopup, updateUsername } = useApp();
   
   const [isEditingName, setIsEditingName] = useState(false);
@@ -37,6 +41,17 @@ export default function Profile() {
   const [showNutzungsbedingungen, setShowNutzungsbedingungen] = useState(false);
   const [showDatenschutz, setShowDatenschutz] = useState(false);
   const [showImpressum, setShowImpressum] = useState(false);
+  
+  // Feedback modals
+  const [feedbackType, setFeedbackType] = useState<'support' | 'bug' | 'suggestion' | null>(null);
+  const [showDonation, setShowDonation] = useState(false);
+
+  // Check for donation success
+  useEffect(() => {
+    if (searchParams.get('donation') === 'success') {
+      toast.success(language === 'DE' ? 'Vielen Dank für deine Spende! ❤️' : 'Thank you for your donation! ❤️');
+    }
+  }, [searchParams, language]);
 
   const handleLogout = async () => {
     if ('vibrate' in navigator) navigator.vibrate(10);
@@ -109,25 +124,25 @@ export default function Profile() {
     {
       icon: HelpCircle,
       label: 'Support',
-      onClick: () => window.open('mailto:support@easybudget.app'),
+      onClick: () => setFeedbackType('support'),
       iconColor: 'text-muted-foreground',
     },
     {
       icon: Bug,
       label: 'Bug Melden',
-      onClick: () => window.open('mailto:bugs@easybudget.app'),
+      onClick: () => setFeedbackType('bug'),
       iconColor: 'text-muted-foreground',
     },
     {
       icon: Lightbulb,
       label: 'Vorschlag',
-      onClick: () => window.open('mailto:feedback@easybudget.app'),
+      onClick: () => setFeedbackType('suggestion'),
       iconColor: 'text-muted-foreground',
     },
     {
       icon: Heart,
       label: 'Donation',
-      onClick: () => {},
+      onClick: () => setShowDonation(true),
       iconColor: 'text-destructive',
     },
   ];
@@ -219,6 +234,14 @@ export default function Profile() {
       <NutzungsbedingungenDialog open={showNutzungsbedingungen} onOpenChange={setShowNutzungsbedingungen} />
       <DatenschutzDialog open={showDatenschutz} onOpenChange={setShowDatenschutz} />
       <ImpressumDialog open={showImpressum} onOpenChange={setShowImpressum} />
+      
+      {/* Feedback & Donation Modals */}
+      <FeedbackModal 
+        isOpen={feedbackType !== null} 
+        onClose={() => setFeedbackType(null)} 
+        type={feedbackType || 'support'} 
+      />
+      <DonationModal isOpen={showDonation} onClose={() => setShowDonation(false)} />
     </div>
   );
 }
