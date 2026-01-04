@@ -1,11 +1,45 @@
-import React from 'react';
-import { X, Star } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Star, Loader2 } from 'lucide-react';
 import { useApp } from '@/contexts/AppContext';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+
+// Stripe Price IDs
+const PRICES = {
+  oneTime: 'price_1SlrGYJ21i7rapyctGujxbJu', // CHF 10 einmalig
+  monthly: 'price_1SlrGoJ21i7rapycghqG6qhk', // CHF 1/Monat
+};
 
 export function PremiumPopup() {
   const { showPremiumPopup, setShowPremiumPopup, language } = useApp();
+  const [loadingOneTime, setLoadingOneTime] = useState(false);
+  const [loadingMonthly, setLoadingMonthly] = useState(false);
 
   if (!showPremiumPopup) return null;
+
+  const handleCheckout = async (priceId: string, mode: 'payment' | 'subscription', setLoading: (v: boolean) => void) => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: { priceId, mode },
+      });
+
+      if (error) {
+        console.error('Checkout error:', error);
+        toast.error(language === 'DE' ? 'Fehler beim Starten der Zahlung' : 'Error starting payment');
+        return;
+      }
+
+      if (data?.url) {
+        window.open(data.url, '_blank');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      toast.error(language === 'DE' ? 'Fehler beim Starten der Zahlung' : 'Error starting payment');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const content = {
     DE: {
@@ -75,8 +109,12 @@ export function PremiumPopup() {
           <div className="border-2 border-primary rounded-2xl p-4 mb-4">
             <p className="font-bold text-lg">{t.oneTime}</p>
             <p className="text-primary text-xl font-bold mb-3">CHF 10.00</p>
-            <button className="w-full bg-primary text-primary-foreground font-bold py-3 rounded-xl haptic-tap">
-              {t.pay}
+            <button 
+              onClick={() => handleCheckout(PRICES.oneTime, 'payment', setLoadingOneTime)}
+              disabled={loadingOneTime || loadingMonthly}
+              className="w-full bg-primary text-primary-foreground font-bold py-3 rounded-xl haptic-tap disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {loadingOneTime ? <Loader2 className="w-5 h-5 animate-spin" /> : t.pay}
             </button>
           </div>
 
@@ -91,8 +129,12 @@ export function PremiumPopup() {
           <div className="border-2 border-primary rounded-2xl p-4">
             <p className="font-bold text-lg">{t.monthly}</p>
             <p className="text-primary text-xl font-bold mb-3">CHF 1.00/Monat</p>
-            <button className="w-full bg-primary text-primary-foreground font-bold py-3 rounded-xl haptic-tap">
-              {t.pay}
+            <button 
+              onClick={() => handleCheckout(PRICES.monthly, 'subscription', setLoadingMonthly)}
+              disabled={loadingOneTime || loadingMonthly}
+              className="w-full bg-primary text-primary-foreground font-bold py-3 rounded-xl haptic-tap disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {loadingMonthly ? <Loader2 className="w-5 h-5 animate-spin" /> : t.pay}
             </button>
           </div>
         </div>
