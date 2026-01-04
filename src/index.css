@@ -147,31 +147,6 @@
     animation: press 0.1s ease-out forwards;
   }
 
-  /* Page Swipe Transitions */
-  .page-transition {
-    will-change: transform, opacity;
-  }
-
-  .page-enter {
-    animation: pageEnterFromRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-
-  .page-enter-from-right {
-    animation: pageEnterFromRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-
-  .page-enter-from-left {
-    animation: pageEnterFromLeft 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-
-  .page-exit-left {
-    animation: pageExitLeft 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-
-  .page-exit-right {
-    animation: pageExitRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-
   /* Haptic simulation - visual feedback */
   .haptic-tap {
     @apply active:scale-95 transition-transform duration-75;
@@ -238,51 +213,6 @@
   0% { transform: scale(1); }
   50% { transform: scale(0.97); }
   100% { transform: scale(1); }
-}
-
-/* Page Swipe Keyframes */
-@keyframes pageEnterFromRight {
-  from { 
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  to { 
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pageEnterFromLeft {
-  from { 
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-  to { 
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pageExitLeft {
-  from { 
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to { 
-    opacity: 0;
-    transform: translateX(-30%);
-  }
-}
-
-@keyframes pageExitRight {
-  from { 
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to { 
-    opacity: 0;
-    transform: translateX(30%);
-  }
 }
 
 /* Custom scrollbar */
