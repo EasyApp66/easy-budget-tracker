@@ -35,6 +35,7 @@ interface AppContextType {
   login: (email: string, password: string) => boolean;
   register: (email: string, password: string) => boolean;
   logout: () => void;
+  updateUsername: (username: string) => void;
   
   // Language
   language: 'DE' | 'EN';
@@ -178,6 +179,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setUser(null);
     setIsLoggedIn(false);
     localStorage.removeItem('easybudget_user');
+  };
+
+  const updateUsername = (username: string) => {
+    if (user) {
+      setUser({ ...user, username });
+    }
   };
 
   const toggleLanguage = () => {
@@ -388,6 +395,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       login,
       register,
       logout,
+      updateUsername,
       language,
       toggleLanguage,
       months,
