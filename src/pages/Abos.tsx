@@ -5,6 +5,7 @@ import { AddModal } from '@/components/AddModal';
 import { ContextMenu } from '@/components/ContextMenu';
 import { EditModal } from '@/components/EditModal';
 import { PremiumPopup } from '@/components/PremiumPopup';
+import { AnimatedNumber } from '@/components/AnimatedNumber';
 
 export default function Abos() {
   const {
@@ -89,7 +90,7 @@ export default function Abos() {
         <div className="bg-card rounded-2xl p-5 animate-slide-up">
           <p className="text-label text-4xl font-black text-foreground">ABO KOSTEN</p>
           <p className="text-display text-5xl text-foreground text-right mt-4">
-            {formatNumber(total)}
+            <AnimatedNumber value={total} />
           </p>
         </div>
 
@@ -123,7 +124,7 @@ export default function Abos() {
               <div className="flex justify-between items-center">
                 <p className="text-title text-lg text-foreground">{sub.name}</p>
                 <p className="text-display text-2xl text-foreground">
-                  {formatNumber(sub.amount)}
+                  <AnimatedNumber value={sub.amount} />
                 </p>
               </div>
             </div>

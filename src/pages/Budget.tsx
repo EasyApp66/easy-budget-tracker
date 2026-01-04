@@ -6,6 +6,7 @@ import { AddModal } from '@/components/AddModal';
 import { ContextMenu } from '@/components/ContextMenu';
 import { EditModal } from '@/components/EditModal';
 import { PremiumPopup } from '@/components/PremiumPopup';
+import { AnimatedNumber } from '@/components/AnimatedNumber';
 
 export default function Budget() {
   const {
@@ -111,7 +112,7 @@ export default function Budget() {
             onClick={() => setShowEditBudget(true)}
           >
             <p className="text-display text-5xl text-foreground text-right mt-4">
-              {formatNumber(activeMonth?.budget || 0)}
+              <AnimatedNumber value={activeMonth?.budget || 0} />
             </p>
           </div>
         </div>
@@ -121,13 +122,13 @@ export default function Budget() {
           <div className="flex justify-between items-center mb-4">
             <p className="text-label text-lg text-foreground">TOTAL</p>
             <p className="text-display text-3xl text-foreground">
-              {formatNumber(total)}
+              <AnimatedNumber value={total} />
             </p>
           </div>
           <div className="flex justify-between items-center">
             <p className="text-label text-lg text-foreground">BLEIBT</p>
             <p className={`text-display text-3xl ${remaining >= 0 ? 'text-primary' : 'text-destructive'}`}>
-              {remaining < 0 && '-'}{formatNumber(Math.abs(remaining))}
+              {remaining < 0 && '-'}<AnimatedNumber value={Math.abs(remaining)} />
             </p>
           </div>
         </div>
@@ -204,7 +205,7 @@ export default function Budget() {
                 </button>
               </div>
               <p className="text-display text-3xl text-foreground text-right">
-                {formatNumber(expense.amount)}
+                <AnimatedNumber value={expense.amount} />
               </p>
             </div>
           ))}
