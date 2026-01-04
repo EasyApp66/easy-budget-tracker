@@ -87,7 +87,7 @@ export default function Abos() {
       <div className="px-4 pt-6 space-y-4">
         {/* Abo Zähler Card */}
         <div className="bg-card rounded-2xl p-5 animate-slide-up">
-          <p className="text-label text-lg text-foreground">ABOS ZÄHLER</p>
+          <p className="text-label text-4xl font-bold text-foreground">ABOS ZÄHLER</p>
           <p className="text-display text-5xl text-foreground text-right mt-4">
             {formatNumber(total)}
           </p>

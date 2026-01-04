@@ -103,7 +103,7 @@ export default function Budget() {
             className="flex items-center gap-2 cursor-pointer group"
             onClick={() => setShowEditTitle(true)}
           >
-            <p className="text-label text-lg text-foreground">{budgetTitle}</p>
+            <p className="text-label text-4xl font-bold text-foreground">{budgetTitle}</p>
             <Pencil className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
           <div 
