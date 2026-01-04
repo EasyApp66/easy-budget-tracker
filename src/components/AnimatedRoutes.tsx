@@ -12,11 +12,11 @@ import NotFound from '@/pages/NotFound';
 
 const pageVariants = {
   enterFromRight: {
-    x: '100%',
+    x: '15%',
     opacity: 0,
   },
   enterFromLeft: {
-    x: '-100%',
+    x: '-15%',
     opacity: 0,
   },
   center: {
@@ -24,19 +24,19 @@ const pageVariants = {
     opacity: 1,
   },
   exitToLeft: {
-    x: '-100%',
+    x: '-15%',
     opacity: 0,
   },
   exitToRight: {
-    x: '100%',
+    x: '15%',
     opacity: 0,
   },
 };
 
 const pageTransition = {
   type: 'tween' as const,
-  ease: 'easeInOut' as const,
-  duration: 0.35,
+  ease: [0.25, 0.1, 0.25, 1] as const,
+  duration: 0.15,
 };
 
 export function AnimatedRoutes() {
@@ -52,7 +52,7 @@ export function AnimatedRoutes() {
         exit={direction === 'forward' ? 'exitToLeft' : 'exitToRight'}
         variants={pageVariants}
         transition={pageTransition}
-        className="min-h-screen"
+        className="min-h-screen pb-24"
       >
         <Routes location={location}>
           <Route path="/" element={<Index />} />
