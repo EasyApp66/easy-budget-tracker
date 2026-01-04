@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import { useApp } from '@/contexts/AppContext';
+import { useNavigation } from '@/contexts/NavigationContext';
 
 export default function Login() {
-  const navigate = useNavigate();
+  const { navigateTo, goBack } = useNavigation();
   const { login, register } = useApp();
   const [isRegister, setIsRegister] = useState(false);
   const [email, setEmail] = useState('');
@@ -14,7 +14,7 @@ export default function Login() {
 
   const handleBack = () => {
     if ('vibrate' in navigator) navigator.vibrate(10);
-    navigate('/');
+    goBack();
   };
 
   const handleSubmit = () => {
@@ -32,11 +32,11 @@ export default function Login() {
         return;
       }
       if (register(email, password)) {
-        navigate('/budget');
+        navigateTo('/budget');
       }
     } else {
       if (login(email, password)) {
-        navigate('/budget');
+        navigateTo('/budget');
       }
     }
   };
