@@ -122,43 +122,29 @@
     @apply font-bold uppercase tracking-wide;
   }
 
-  /* Animations - subtle and fast */
+  /* Animations */
   .animate-fade-in {
-    animation: fadeIn 0.15s ease-out forwards;
+    animation: fadeIn 0.3s ease-out forwards;
   }
 
   .animate-fade-out {
-    animation: fadeOut 0.15s ease-out forwards;
+    animation: fadeOut 0.3s ease-out forwards;
   }
 
   .animate-slide-up {
-    animation: subtleFadeIn 0.15s ease-out forwards;
+    animation: slideUp 0.3s ease-out forwards;
   }
 
   .animate-slide-down {
-    animation: subtleFadeIn 0.15s ease-out forwards;
+    animation: slideDown 0.3s ease-out forwards;
   }
 
   .animate-scale-in {
-    animation: subtleFadeIn 0.12s ease-out forwards;
+    animation: scaleIn 0.2s ease-out forwards;
   }
 
   .animate-press {
     animation: press 0.1s ease-out forwards;
-  }
-
-  /* Page transition animations */
-  .page-transition {
-    width: 100%;
-    min-height: 100vh;
-  }
-
-  .page-transition.enter {
-    animation: slideInFromRight 0.2s ease-out forwards;
-  }
-
-  .page-transition.exit {
-    animation: slideOutToLeft 0.15s ease-out forwards;
   }
 
   /* Haptic simulation - visual feedback */
@@ -190,30 +176,36 @@
   to { opacity: 0; }
 }
 
-@keyframes subtleFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideInFromRight {
-  from {
+@keyframes slideUp {
+  from { 
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateY(20px);
   }
-  to {
+  to { 
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 
-@keyframes slideOutToLeft {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
+@keyframes slideDown {
+  from { 
     opacity: 0;
-    transform: translateX(-30px);
+    transform: translateY(-20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to { 
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -243,15 +235,4 @@ input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px hsl(var(--dark-grey)) inset !important;
   -webkit-text-fill-color: hsl(var(--foreground)) !important;
   caret-color: hsl(var(--foreground));
-}
-
-/* Hide number input spinners */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
 }
