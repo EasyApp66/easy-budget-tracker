@@ -4,16 +4,19 @@ import { useApp } from '@/contexts/AppContext';
 
 const Index = () => {
   const navigate = useNavigate();
-  const { isLoggedIn } = useApp();
+  const { isLoggedIn, isLoading } = useApp();
 
   useEffect(() => {
+    // Wait until auth state is determined
+    if (isLoading) return;
+    
     // Redirect based on auth state
     if (isLoggedIn) {
-      navigate('/budget');
+      navigate('/budget', { replace: true });
     } else {
-      navigate('/welcome');
+      navigate('/welcome', { replace: true });
     }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, isLoading, navigate]);
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center">
