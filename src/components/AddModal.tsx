@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
 
 interface AddModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAdd: (name: string, amount?: number) => boolean;
+  onAdd: (name: string, amount?: number) => boolean | Promise<boolean>;
   title: string;
   namePlaceholder: string;
   hideAmount?: boolean;
@@ -13,27 +12,35 @@ interface AddModalProps {
 export function AddModal({ isOpen, onClose, onAdd, title, namePlaceholder, hideAmount = false }: AddModalProps) {
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = () => {
-    if (hideAmount) {
-      if (name) {
-        const success = onAdd(name.toUpperCase());
-        if (success) {
-          setName('');
-          onClose();
+  const handleSubmit = async () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    
+    try {
+      if (hideAmount) {
+        if (name) {
+          const success = await onAdd(name.toUpperCase());
+          if (success) {
+            setName('');
+            onClose();
+          }
+        }
+      } else {
+        if (name && amount) {
+          const success = await onAdd(name.toUpperCase(), parseFloat(amount) || 0);
+          if (success) {
+            setName('');
+            setAmount('');
+            onClose();
+          }
         }
       }
-    } else {
-      if (name && amount) {
-        const success = onAdd(name.toUpperCase(), parseFloat(amount) || 0);
-        if (success) {
-          setName('');
-          setAmount('');
-          onClose();
-        }
-      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -71,15 +78,17 @@ export function AddModal({ isOpen, onClose, onAdd, title, namePlaceholder, hideA
         <div className="flex gap-3 mt-6">
           <button
             onClick={handleClose}
-            className="flex-1 bg-secondary text-foreground font-bold py-4 rounded-xl haptic-tap transition-all"
+            disabled={isSubmitting}
+            className="flex-1 bg-secondary text-foreground font-bold py-4 rounded-xl haptic-tap transition-all disabled:opacity-50"
           >
             Abbrechen
           </button>
           <button
             onClick={handleSubmit}
-            className="flex-1 bg-primary text-primary-foreground font-bold py-4 rounded-xl haptic-tap transition-all"
+            disabled={isSubmitting}
+            className="flex-1 bg-primary text-primary-foreground font-bold py-4 rounded-xl haptic-tap transition-all disabled:opacity-50"
           >
-            Hinzufügen
+            {isSubmitting ? '...' : 'Hinzufügen'}
           </button>
         </div>
       </div>
