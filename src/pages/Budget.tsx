@@ -99,7 +99,7 @@ export default function Budget() {
     <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="px-4 pt-6 space-y-4">
         {/* Budget Card */}
-        <div className="bg-card rounded-2xl p-5 animate-slide-up">
+        <div className="bg-card rounded-2xl p-5">
           <div 
             className="flex items-center gap-2 cursor-pointer group"
             onClick={() => setShowEditTitle(true)}
@@ -118,7 +118,7 @@ export default function Budget() {
         </div>
 
         {/* Total & Remaining Card */}
-        <div className="bg-card rounded-2xl p-5 animate-slide-up" style={{ animationDelay: '50ms' }}>
+        <div className="bg-card rounded-2xl p-5">
           <div className="flex justify-between items-center mb-4">
             <p className="text-label text-lg text-foreground">TOTAL</p>
             <p className="text-display text-3xl text-foreground">
@@ -134,7 +134,7 @@ export default function Budget() {
         </div>
 
         {/* Month Selector */}
-        <div className="flex items-center gap-3 overflow-x-auto py-2 animate-slide-up" style={{ animationDelay: '100ms' }}>
+        <div className="flex items-center gap-3 overflow-x-auto py-2">
           <button
             onClick={() => setShowAddMonth(true)}
             className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0 haptic-tap sticky left-0 z-10"
@@ -176,7 +176,7 @@ export default function Budget() {
         </div>
 
         {/* Expenses Grid */}
-        <div className="grid grid-cols-2 gap-3 animate-slide-up" style={{ animationDelay: '150ms' }}>
+        <div className="grid grid-cols-2 gap-3">
           {sortedExpenses.map((expense) => (
             <div
               key={expense.id}
@@ -212,14 +212,14 @@ export default function Budget() {
         </div>
 
         {sortedExpenses.length === 0 && activeMonth && (
-          <div className="text-center py-12 text-muted-foreground animate-fade-in">
+          <div className="text-center py-12 text-muted-foreground">
             <p>Keine Ausgaben</p>
             <p className="text-sm mt-1">Tippe auf + um eine hinzuzufügen</p>
           </div>
         )}
 
         {!activeMonth && (
-          <div className="text-center py-12 text-muted-foreground animate-fade-in">
+          <div className="text-center py-12 text-muted-foreground">
             <p>Kein Monat ausgewählt</p>
             <p className="text-sm mt-1">Erstelle einen Monat um zu beginnen</p>
           </div>
