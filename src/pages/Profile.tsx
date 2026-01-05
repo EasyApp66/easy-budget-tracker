@@ -151,7 +151,7 @@ export default function Profile() {
     <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="px-4 pt-6 space-y-4">
         {/* Profile Card */}
-        <div className="bg-card rounded-3xl p-6 flex flex-col items-center animate-slide-up">
+        <div className="bg-card rounded-3xl p-6 flex flex-col items-center">
           {/* Avatar */}
           <div className="w-24 h-24 rounded-full bg-primary flex items-center justify-center mb-4 ring-4 ring-primary/30">
             <User className="w-12 h-12 text-primary-foreground" />
@@ -198,7 +198,7 @@ export default function Profile() {
         </div>
 
         {/* Menu Items */}
-        <div className="space-y-2 animate-slide-up" style={{ animationDelay: '50ms' }}>
+        <div className="space-y-2">
           {menuItems.map((item, index) => (
             <button
               key={index}
@@ -218,7 +218,7 @@ export default function Profile() {
         </div>
 
         {/* Footer */}
-        <div className="text-center py-8 animate-fade-in" style={{ animationDelay: '100ms' }}>
+        <div className="text-center py-8">
           <p className="text-muted-foreground text-sm">Version 1.0.0</p>
           <p className="text-muted-foreground text-sm mt-1">
             Made with <span className="text-destructive">❤️</span>

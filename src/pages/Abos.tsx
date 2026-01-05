@@ -87,7 +87,7 @@ export default function Abos() {
     <div className="min-h-screen bg-background pb-32 safe-top">
       <div className="px-4 pt-6 space-y-4">
         {/* Abo Zähler Card */}
-        <div className="bg-card rounded-2xl p-5 animate-slide-up">
+        <div className="bg-card rounded-2xl p-5">
           <p className="text-label text-4xl font-black text-foreground">ABO KOSTEN</p>
           <p className="text-display text-5xl text-foreground text-right mt-4">
             <AnimatedNumber value={total} />
@@ -95,7 +95,7 @@ export default function Abos() {
         </div>
 
         {/* Total Count Card */}
-        <div className="bg-card rounded-2xl p-5 animate-slide-up" style={{ animationDelay: '50ms' }}>
+        <div className="bg-card rounded-2xl p-5">
           <div className="flex justify-between items-center">
             <p className="text-label text-lg text-foreground">TOTAL</p>
             <p className="text-display text-3xl text-foreground">
@@ -105,7 +105,7 @@ export default function Abos() {
         </div>
 
         {/* Subscriptions List */}
-        <div className="space-y-3 animate-slide-up" style={{ animationDelay: '100ms' }}>
+        <div className="space-y-3">
           {sortedSubs.map((sub) => (
             <div
               key={sub.id}
@@ -132,7 +132,7 @@ export default function Abos() {
         </div>
 
         {subscriptions.length === 0 && (
-          <div className="text-center py-12 text-muted-foreground animate-fade-in">
+          <div className="text-center py-12 text-muted-foreground">
             <p>Keine Abos</p>
             <p className="text-sm mt-1">Tippe auf + um eins hinzuzufügen</p>
           </div>
@@ -140,7 +140,7 @@ export default function Abos() {
 
         {/* Swipe hints */}
         {subscriptions.length > 0 && (
-          <p className="text-center text-xs text-muted-foreground mt-4 animate-fade-in">
+          <p className="text-center text-xs text-muted-foreground mt-4">
             ← Wischen zum Löschen • Wischen zum Fixieren →
           </p>
         )}

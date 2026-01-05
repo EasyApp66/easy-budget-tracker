@@ -23,7 +23,7 @@ export default function Welcome() {
     <div className="min-h-screen bg-background flex flex-col px-6 py-12 safe-top">
       {/* Hero Text */}
       <div className="flex-1 flex flex-col justify-center">
-        <div className="animate-slide-up" style={{ animationDelay: '0ms' }}>
+        <div>
           <p className="text-display text-3xl text-foreground leading-tight">
             Hallo! Ich bin
           </p>
@@ -32,7 +32,7 @@ export default function Welcome() {
           </h1>
         </div>
 
-        <div className="mt-12 animate-slide-up" style={{ animationDelay: '100ms' }}>
+        <div className="mt-12">
           <p className="text-display text-5xl text-foreground leading-tight">
             Tracke
           </p>
@@ -44,7 +44,7 @@ export default function Welcome() {
           </p>
         </div>
 
-        <div className="mt-4 animate-slide-up" style={{ animationDelay: '200ms' }}>
+        <div className="mt-4">
           <p className="text-display text-5xl text-foreground leading-tight">
             und deine
           </p>
@@ -55,7 +55,7 @@ export default function Welcome() {
       </div>
 
       {/* Buttons */}
-      <div className="space-y-4 mb-8 animate-slide-up" style={{ animationDelay: '300ms' }}>
+      <div className="space-y-4 mb-8">
         <button
           onClick={handleEmailClick}
           className="w-full bg-primary text-primary-foreground font-bold text-lg py-5 rounded-2xl flex items-center justify-center gap-3 haptic-tap transition-all active:scale-98"
@@ -74,7 +74,7 @@ export default function Welcome() {
       </div>
 
       {/* Footer */}
-      <div className="text-center text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: '400ms' }}>
+      <div className="text-center text-sm text-muted-foreground">
         <p>
           Indem du fortfährst, bestätigst du, dass du die{' '}
           <button 

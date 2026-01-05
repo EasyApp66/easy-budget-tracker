@@ -100,13 +100,13 @@ export default function Login() {
       {/* Back Button */}
       <button
         onClick={handleBack}
-        className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center haptic-tap mb-8 animate-fade-in"
+        className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center haptic-tap mb-8"
       >
         <ChevronLeft className="w-6 h-6 text-foreground" />
       </button>
 
       {/* Title */}
-      <div className="mb-8 animate-slide-up">
+      <div className="mb-8">
         <h1 className="text-display text-4xl text-foreground leading-tight">
           {isForgotPassword 
             ? 'Passwort vergessen' 
@@ -124,7 +124,7 @@ export default function Login() {
       </div>
 
       {/* Form */}
-      <div className="space-y-4 animate-slide-up" style={{ animationDelay: '100ms' }}>
+      <div className="space-y-4">
         <div>
           <label className="text-label text-sm text-foreground mb-2 block">E-Mail</label>
           <input
@@ -168,7 +168,7 @@ export default function Login() {
       </div>
 
       {/* Actions */}
-      <div className="mt-8 space-y-4 animate-slide-up" style={{ animationDelay: '200ms' }}>
+      <div className="mt-8 space-y-4">
         {isForgotPassword ? (
           <>
             <button
