@@ -174,7 +174,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       })));
 
       if (settingsData) {
-        setLanguageState(settingsData.language as 'DE' | 'EN' | 'FR' | 'IT' | 'ES');
+        const dbLanguage = settingsData.language as 'DE' | 'EN' | 'FR' | 'IT' | 'ES';
+        setLanguageState(dbLanguage);
+        localStorage.setItem('app_language', dbLanguage);
         setActiveMonthIdState(settingsData.active_month_id);
       } else if (mappedMonths.length > 0) {
         setActiveMonthIdState(mappedMonths[0].id);
