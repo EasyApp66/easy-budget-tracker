@@ -60,6 +60,7 @@ interface AppContextType {
   editExpense: (id: string, name?: string, amount?: number) => Promise<void>;
   duplicateExpense: (id: string) => Promise<void>;
   pinExpense: (id: string) => Promise<void>;
+  reorderExpenses: (expenseId: string, newIndex: number) => Promise<void>;
   
   // Budget
   setBudget: (amount: number) => Promise<void>;
@@ -669,6 +670,48 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const reorderExpenses = async (expenseId: string, newIndex: number) => {
+    if (!session?.user || !activeMonthId) return;
+
+    const activeMonth = months.find(m => m.id === activeMonthId);
+    if (!activeMonth) return;
+
+    const expense = activeMonth.expenses.find(e => e.id === expenseId);
+    if (!expense || expense.pinned) return; // Don't allow reordering pinned expenses
+
+    // Separate pinned and unpinned expenses
+    const pinnedExpenses = activeMonth.expenses.filter(e => e.pinned);
+    const unpinnedExpenses = activeMonth.expenses.filter(e => !e.pinned);
+
+    // Find current index in unpinned array
+    const currentIndex = unpinnedExpenses.findIndex(e => e.id === expenseId);
+    if (currentIndex === -1 || currentIndex === newIndex) return;
+
+    // Reorder unpinned expenses
+    const reorderedUnpinned = [...unpinnedExpenses];
+    const [movedExpense] = reorderedUnpinned.splice(currentIndex, 1);
+    reorderedUnpinned.splice(newIndex, 0, movedExpense);
+
+    // Combine pinned (first) + reordered unpinned
+    const newExpenses = [...pinnedExpenses, ...reorderedUnpinned];
+
+    // Update local state immediately for responsive UI
+    setMonths(prev => prev.map(m => 
+      m.id === activeMonthId ? { ...m, expenses: newExpenses } : m
+    ));
+
+    // Update sort_order in database for all unpinned expenses
+    const updates = reorderedUnpinned.map((e, index) => 
+      supabase
+        .from('expenses')
+        .update({ sort_order: pinnedExpenses.length + index })
+        .eq('id', e.id)
+        .eq('user_id', session.user.id)
+    );
+
+    await Promise.all(updates);
+  };
+
   const setBudget = async (amount: number) => {
     if (!session?.user || !activeMonthId) return;
 
@@ -840,6 +883,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       editExpense,
       duplicateExpense,
       pinExpense,
+      reorderExpenses,
       setBudget,
       subscriptions,
       addSubscription,
