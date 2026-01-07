@@ -7,7 +7,6 @@ import { ContextMenu } from '@/components/ContextMenu';
 import { EditModal } from '@/components/EditModal';
 import { PremiumPopup } from '@/components/PremiumPopup';
 import { AnimatedNumber } from '@/components/AnimatedNumber';
-import { DraggableExpenseCard } from '@/components/DraggableExpenseCard';
 export default function Budget() {
   const {
     months,
@@ -23,7 +22,6 @@ export default function Budget() {
     editExpense,
     duplicateExpense,
     pinExpense,
-    reorderExpenses,
     setBudget
   } = useApp();
   const [showAddExpense, setShowAddExpense] = useState(false);
@@ -143,24 +141,25 @@ export default function Budget() {
 
         {/* Expenses Grid */}
         <div className="grid grid-cols-2 gap-3">
-          {sortedExpenses.map((expense, displayIndex) => {
-            // Calculate index within unpinned expenses for reordering
-            const unpinnedExpenses = sortedExpenses.filter(e => !e.pinned);
-            const unpinnedIndex = unpinnedExpenses.findIndex(e => e.id === expense.id);
-            
-            return (
-              <DraggableExpenseCard
-                key={expense.id}
-                expense={expense}
-                index={unpinnedIndex >= 0 ? unpinnedIndex : 0}
-                totalUnpinned={unpinnedExpenses.length}
-                onDelete={() => deleteExpense(expense.id)}
-                onLongPressStart={() => handleLongPressStart('expense', expense.id)}
-                onLongPressEnd={handleLongPressEnd}
-                onReorder={(newIndex) => reorderExpenses(expense.id, newIndex)}
-              />
-            );
-          })}
+          {sortedExpenses.map(expense => <div key={expense.id} onMouseDown={() => handleLongPressStart('expense', expense.id)} onMouseUp={handleLongPressEnd} onMouseLeave={handleLongPressEnd} onTouchStart={() => handleLongPressStart('expense', expense.id)} onTouchEnd={handleLongPressEnd} className={`
+                bg-card rounded-2xl p-4 aspect-square flex flex-col justify-between haptic-tap transition-all duration-300
+                ${expense.pinned ? 'border-2 border-primary' : 'border-2 border-transparent'}
+              `}>
+              <div className="flex justify-between items-start">
+                <p className="text-label text-base text-foreground leading-tight flex-1 pr-2">
+                  {expense.name}
+                </p>
+                <button onClick={() => {
+              if ('vibrate' in navigator) navigator.vibrate(10);
+              deleteExpense(expense.id);
+            }} className="flex items-center justify-center flex-shrink-0">
+                  <X className="w-6 h-6 text-destructive" strokeWidth={3} />
+                </button>
+              </div>
+              <p className="text-display text-3xl text-foreground text-right">
+                <AnimatedNumber value={expense.amount} />
+              </p>
+            </div>)}
         </div>
 
         {sortedExpenses.length === 0 && activeMonth && <div className="text-center py-12 text-muted-foreground">
