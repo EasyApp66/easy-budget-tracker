@@ -81,9 +81,9 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const FREE_LIMITS = {
-  expenses: 8,
-  months: 2,
-  subscriptions: 5,
+  expenses: 6,  // Show paywall at 6+ expenses
+  months: 2,    // Show paywall at 3+ months
+  subscriptions: 5, // Show paywall at 6+ subscriptions
 };
 
 export function AppProvider({ children }: { children: ReactNode }) {
@@ -315,11 +315,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
     switch (type) {
       case 'expense':
         const activeMonth = months.find(m => m.id === activeMonthId);
+        // Show paywall when user has 6 or more expenses
         return !activeMonth || activeMonth.expenses.length < FREE_LIMITS.expenses;
       case 'month':
+        // Show paywall when user tries to create 3rd month (already has 2)
         return months.length < FREE_LIMITS.months;
       case 'subscription':
-        return subscriptions.length < FREE_LIMITS.subscriptions;
+        // Show paywall when user has more than 5 subscriptions
+        return subscriptions.length <= FREE_LIMITS.subscriptions;
       default:
         return true;
     }
