@@ -126,6 +126,32 @@ export default function Profile() {
       donationSuccess: 'Merci pour votre don! ❤️',
       selectLanguage: 'Choisir la langue',
     },
+    IT: {
+      tapToChangeName: 'Tocca per cambiare nome',
+      enterName: 'Inserisci nome',
+      premium: 'Premium',
+      yes: 'Sì',
+      no: 'No',
+      logout: 'Esci',
+      changeLanguage: 'Cambia lingua',
+      currentLang: 'Italiano',
+      restorePremium: 'Ripristina Premium',
+      buyPremium: 'Acquista Premium',
+      agb: 'Termini e Condizioni',
+      termsOfUse: "Condizioni d'uso",
+      privacy: 'Privacy',
+      imprint: 'Imprint',
+      support: 'Supporto',
+      reportBug: 'Segnala bug',
+      suggestion: 'Suggerimento',
+      donation: 'Donazione',
+      version: 'Versione',
+      madeWith: 'Fatto con',
+      shareText: 'Scopri questa fantastica app per il budget!',
+      linkCopied: 'Link copiato!',
+      donationSuccess: 'Grazie per la tua donazione! ❤️',
+      selectLanguage: 'Seleziona lingua',
+    },
   };
 
   const t = content[language];
@@ -156,7 +182,7 @@ export default function Profile() {
     setIsEditingName(false);
   };
 
-  const handleLanguageSelect = (lang: 'DE' | 'EN' | 'FR') => {
+  const handleLanguageSelect = (lang: 'DE' | 'EN' | 'FR' | 'IT') => {
     setLanguage(lang);
     setShowLanguageMenu(false);
   };
@@ -352,7 +378,7 @@ export default function Profile() {
             <div className="p-4 border-b border-border">
               <p className="text-center font-bold text-lg">{t.selectLanguage}</p>
             </div>
-            {(['DE', 'EN', 'FR'] as const).map((lang) => (
+            {(['DE', 'EN', 'FR', 'IT'] as const).map((lang) => (
               <button
                 key={lang}
                 onClick={() => handleLanguageSelect(lang)}
@@ -360,7 +386,7 @@ export default function Profile() {
                   language === lang ? 'text-primary' : 'text-foreground'
                 } border-b border-border/30 last:border-b-0`}
               >
-                {lang === 'DE' ? '🇩🇪 Deutsch' : lang === 'EN' ? '🇬🇧 English' : '🇫🇷 Français'}
+                {lang === 'DE' ? '🇩🇪 Deutsch' : lang === 'EN' ? '🇬🇧 English' : lang === 'FR' ? '🇫🇷 Français' : '🇮🇹 Italiano'}
               </button>
             ))}
           </div>

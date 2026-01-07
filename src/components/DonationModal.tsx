@@ -47,6 +47,15 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
       error: 'Erreur lors du démarrage du paiement',
       minAmount: 'Le montant minimum est de CHF 1.00',
     },
+    IT: {
+      title: 'Fai una donazione',
+      subtitle: 'Sostieni lo sviluppo dell\'app',
+      custom: 'Importo personalizzato',
+      donate: 'Dona',
+      thanks: 'Grazie mille! ❤️',
+      error: 'Errore durante l\'avvio del pagamento',
+      minAmount: 'L\'importo minimo è CHF 1.00',
+    },
   };
 
   const t = content[language];

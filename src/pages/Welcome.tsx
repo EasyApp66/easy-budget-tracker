@@ -63,6 +63,23 @@ export default function Welcome() {
       agb: 'CGV',
       readText: '.',
     },
+    IT: {
+      hello: 'Ciao! Sono',
+      track: 'Traccia',
+      your: 'il tuo',
+      budget: 'BUDGET',
+      andYour: 'e i tuoi',
+      abos: 'ABBONAMENTI',
+      emailButton: 'Continua con Email',
+      appleButton: 'Continua con Apple',
+      googleButton: 'Continua con Google',
+      footer: 'Continuando, confermi di aver letto i',
+      termsOfUse: "Termini d'uso",
+      and: 'e la',
+      privacy: 'Informativa sulla privacy',
+      agb: 'Termini e Condizioni',
+      readText: '.',
+    },
   };
 
   const t = content[language];
