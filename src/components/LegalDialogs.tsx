@@ -85,6 +85,40 @@ export function AGBDialog({ open, onOpenChange }: LegalDialogProps) {
         },
       ],
     },
+    FR: {
+      title: 'Conditions Générales de Vente (CGV)',
+      date: 'Dernière mise à jour: Janvier 2025',
+      sections: [
+        {
+          title: "1. Champ d'application",
+          text: "Ces Conditions Générales s'appliquent à l'utilisation de l'application Easy Budget (ci-après \"Application\"). En utilisant l'Application, vous acceptez pleinement ces conditions.",
+        },
+        {
+          title: '2. Objet du contrat',
+          text: "L'Application permet aux utilisateurs de gérer leur budget personnel, de suivre leurs dépenses et abonnements. L'Application est proposée en version gratuite de base et en version premium payante.",
+        },
+        {
+          title: '3. Inscription et compte utilisateur',
+          text: "L'inscription est requise pour utiliser l'Application. Les utilisateurs sont tenus de fournir des informations véridiques et de garder leurs identifiants de connexion confidentiels.",
+        },
+        {
+          title: '4. Fonctionnalités Premium',
+          text: 'La version premium offre des fonctionnalités étendues telles que des mois, dépenses et abonnements illimités. Les prix et conditions de paiement sont affichés de manière transparente avant achat.',
+        },
+        {
+          title: '5. Responsabilité',
+          text: "L'utilisation de l'Application est à vos propres risques. Nous ne sommes pas responsables des dommages causés par des saisies de données incorrectes ou des perturbations techniques, sauf en cas de négligence grave ou d'intention.",
+        },
+        {
+          title: '6. Modifications des conditions',
+          text: "Nous nous réservons le droit de modifier ces conditions à tout moment. Les modifications seront communiquées aux utilisateurs en temps opportun. L'utilisation continue de l'Application constitue une acceptation des conditions modifiées.",
+        },
+        {
+          title: '7. Droit applicable et juridiction',
+          text: 'Le droit suisse est applicable. Le lieu de juridiction est Zurich, Suisse.',
+        },
+      ],
+    },
   };
 
   const t = content[language];
@@ -173,6 +207,36 @@ export function NutzungsbedingungenDialog({ open, onOpenChange }: LegalDialogPro
         {
           title: '6. Changes',
           text: 'We reserve the right to modify these terms as needed. Significant changes will be communicated to users.',
+        },
+      ],
+    },
+    FR: {
+      title: "Conditions d'utilisation",
+      date: 'Dernière mise à jour: Janvier 2025',
+      sections: [
+        {
+          title: "1. Droits d'utilisation",
+          text: "Lors de l'inscription, vous recevez un droit non exclusif et non transférable d'utiliser l'application Easy Budget à des fins personnelles et non commerciales.",
+        },
+        {
+          title: "2. Obligations de l'utilisateur",
+          text: "Les utilisateurs s'engagent à ne pas utiliser l'Application de manière abusive, à ne pas stocker de contenu illégal et à ne pas contourner les mesures de protection technique.",
+        },
+        {
+          title: '3. Disponibilité',
+          text: "Nous nous efforçons d'assurer une haute disponibilité de l'Application mais ne pouvons garantir une disponibilité ininterrompue. Les travaux de maintenance seront annoncés dans la mesure du possible.",
+        },
+        {
+          title: '4. Stockage des données',
+          text: "Les données saisies par les utilisateurs sont stockées localement sur leur appareil. Les utilisateurs sont responsables de la sauvegarde de leurs propres données.",
+        },
+        {
+          title: '5. Résiliation',
+          text: "Les utilisateurs peuvent supprimer leur compte à tout moment. En cas de violation de ces conditions, nous nous réservons le droit de bloquer l'accès à l'Application.",
+        },
+        {
+          title: '6. Modifications',
+          text: "Nous nous réservons le droit de modifier ces conditions selon les besoins. Les modifications importantes seront communiquées aux utilisateurs.",
         },
       ],
     },
@@ -277,6 +341,41 @@ export function DatenschutzDialog({ open, onOpenChange }: LegalDialogProps) {
         },
       ],
     },
+    FR: {
+      title: 'Politique de confidentialité',
+      date: 'Dernière mise à jour: Janvier 2025',
+      sections: [
+        {
+          title: '1. Responsable du traitement',
+          text: 'Ivan Mirosnic\nAhornstrasse\n8600 Dübendorf\nSuisse',
+        },
+        {
+          title: '2. Données collectées',
+          text: "Nous ne collectons que vos données de connexion (adresse email et mot de passe). Aucune autre donnée personnelle n'est collectée ou stockée.",
+          highlight: true,
+        },
+        {
+          title: '3. Stockage local des données',
+          text: "Toutes vos données budgétaires, dépenses et abonnements sont stockés exclusivement sur votre appareil. Ces données ne sont pas transmises à nos serveurs.",
+        },
+        {
+          title: "4. Finalité d'utilisation",
+          text: "Vos données de connexion sont utilisées exclusivement pour l'authentification et l'accès à l'Application.",
+        },
+        {
+          title: '5. Partage des données',
+          text: 'Nous ne partageons pas vos données avec des tiers, sauf lorsque la loi nous y oblige.',
+        },
+        {
+          title: '6. Vos droits',
+          text: "En vertu de la loi suisse sur la protection des données (LPD), vous avez le droit d'accéder, de corriger et de supprimer vos données. Contactez-nous à support@easybudget.app.",
+        },
+        {
+          title: '7. Sécurité des données',
+          text: "Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données conformément aux exigences de la loi suisse sur la protection des données.",
+        },
+      ],
+    },
   };
 
   const t = content[language];
@@ -365,6 +464,35 @@ export function ImpressumDialog({ open, onOpenChange }: LegalDialogProps) {
         {
           title: 'Applicable Law',
           text: 'Swiss law applies exclusively. The place of jurisdiction is Zurich.',
+        },
+      ],
+    },
+    FR: {
+      title: 'Mentions légales',
+      sections: [
+        {
+          title: 'Informations selon le droit suisse',
+          text: '',
+        },
+        {
+          title: "Opérateur de l'application",
+          text: 'Ivan Mirosnic\nAhornstrasse\n8600 Dübendorf\nSuisse',
+        },
+        {
+          title: 'Contact',
+          text: 'Email: support@easybudget.app',
+        },
+        {
+          title: 'Clause de non-responsabilité',
+          text: "L'auteur n'assume aucune responsabilité quant à l'exactitude, la précision, l'actualité, la fiabilité et l'exhaustivité des informations.\n\nLes réclamations en responsabilité contre l'auteur pour des dommages de nature matérielle ou immatérielle résultant de l'accès ou de l'utilisation ou de la non-utilisation des informations publiées sont exclues.",
+        },
+        {
+          title: "Droits d'auteur",
+          text: "Les droits d'auteur et tous les autres droits sur le contenu, les images, les photos ou autres fichiers de l'Application appartiennent exclusivement à Ivan Mirosnic ou aux titulaires de droits spécifiquement mentionnés.",
+        },
+        {
+          title: 'Droit applicable',
+          text: "Le droit suisse s'applique exclusivement. Le lieu de juridiction est Zurich.",
         },
       ],
     },

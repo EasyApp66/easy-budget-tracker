@@ -33,7 +33,7 @@ import { toast } from 'sonner';
 export default function Profile() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { user, logout, language, toggleLanguage, setShowPremiumPopup, updateUsername } = useApp();
+  const { user, logout, language, setLanguage, setShowPremiumPopup, updateUsername } = useApp();
   
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState(user?.username || '');
@@ -41,6 +41,7 @@ export default function Profile() {
   const [showNutzungsbedingungen, setShowNutzungsbedingungen] = useState(false);
   const [showDatenschutz, setShowDatenschutz] = useState(false);
   const [showImpressum, setShowImpressum] = useState(false);
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   
   // Feedback modals
   const [feedbackType, setFeedbackType] = useState<'support' | 'bug' | 'suggestion' | null>(null);
@@ -55,8 +56,7 @@ export default function Profile() {
       no: 'Nein',
       logout: 'Ausloggen',
       changeLanguage: 'Sprache ändern',
-      german: 'Deutsch',
-      english: 'English',
+      currentLang: 'Deutsch',
       restorePremium: 'Premium Wiederherstellen',
       buyPremium: 'Premium Kaufen',
       agb: 'AGB',
@@ -72,6 +72,7 @@ export default function Profile() {
       shareText: 'Schau dir diese tolle Budget-App an!',
       linkCopied: 'Link kopiert!',
       donationSuccess: 'Vielen Dank für deine Spende! ❤️',
+      selectLanguage: 'Sprache wählen',
     },
     EN: {
       tapToChangeName: 'Tap to change name',
@@ -81,8 +82,7 @@ export default function Profile() {
       no: 'No',
       logout: 'Logout',
       changeLanguage: 'Change Language',
-      german: 'Deutsch',
-      english: 'English',
+      currentLang: 'English',
       restorePremium: 'Restore Premium',
       buyPremium: 'Buy Premium',
       agb: 'Terms & Conditions',
@@ -98,6 +98,33 @@ export default function Profile() {
       shareText: 'Check out this great budget app!',
       linkCopied: 'Link copied!',
       donationSuccess: 'Thank you for your donation! ❤️',
+      selectLanguage: 'Select Language',
+    },
+    FR: {
+      tapToChangeName: 'Appuyez pour changer le nom',
+      enterName: 'Entrer le nom',
+      premium: 'Premium',
+      yes: 'Oui',
+      no: 'Non',
+      logout: 'Déconnexion',
+      changeLanguage: 'Changer de langue',
+      currentLang: 'Français',
+      restorePremium: 'Restaurer Premium',
+      buyPremium: 'Acheter Premium',
+      agb: 'CGV',
+      termsOfUse: "Conditions d'utilisation",
+      privacy: 'Confidentialité',
+      imprint: 'Mentions légales',
+      support: 'Support',
+      reportBug: 'Signaler un bug',
+      suggestion: 'Suggestion',
+      donation: 'Don',
+      version: 'Version',
+      madeWith: 'Fait avec',
+      shareText: 'Découvrez cette super application de budget!',
+      linkCopied: 'Lien copié!',
+      donationSuccess: 'Merci pour votre don! ❤️',
+      selectLanguage: 'Choisir la langue',
     },
   };
 
@@ -129,6 +156,11 @@ export default function Profile() {
     setIsEditingName(false);
   };
 
+  const handleLanguageSelect = (lang: 'DE' | 'EN' | 'FR') => {
+    setLanguage(lang);
+    setShowLanguageMenu(false);
+  };
+
   const menuItems = [
     {
       icon: LogOut,
@@ -138,8 +170,8 @@ export default function Profile() {
     },
     {
       icon: Globe,
-      label: `${t.changeLanguage}: ${language === 'DE' ? t.german : t.english}`,
-      onClick: toggleLanguage,
+      label: `${t.changeLanguage}: ${t.currentLang}`,
+      onClick: () => setShowLanguageMenu(true),
       iconColor: 'text-primary',
     },
     {
@@ -306,6 +338,34 @@ export default function Profile() {
         }
       }} />
       <PremiumPopup />
+      
+      {/* Language Selection Modal */}
+      {showLanguageMenu && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 animate-fade-in"
+          onClick={() => setShowLanguageMenu(false)}
+        >
+          <div 
+            className="bg-popover rounded-2xl w-[80%] max-w-xs overflow-hidden animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4 border-b border-border">
+              <p className="text-center font-bold text-lg">{t.selectLanguage}</p>
+            </div>
+            {(['DE', 'EN', 'FR'] as const).map((lang) => (
+              <button
+                key={lang}
+                onClick={() => handleLanguageSelect(lang)}
+                className={`w-full py-4 px-6 text-center font-bold text-lg transition-colors haptic-tap active:bg-secondary ${
+                  language === lang ? 'text-primary' : 'text-foreground'
+                } border-b border-border/30 last:border-b-0`}
+              >
+                {lang === 'DE' ? '🇩🇪 Deutsch' : lang === 'EN' ? '🇬🇧 English' : '🇫🇷 Français'}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       
       {/* Legal Dialogs */}
       <AGBDialog open={showAGB} onOpenChange={setShowAGB} />

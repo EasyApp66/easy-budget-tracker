@@ -23,6 +23,10 @@ export function EditModal({ isOpen, onClose, onSave, title, currentValue, type }
       cancel: 'Cancel',
       save: 'Save',
     },
+    FR: {
+      cancel: 'Annuler',
+      save: 'Enregistrer',
+    },
   };
 
   const t = content[language];
