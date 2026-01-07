@@ -131,6 +131,28 @@ export default function Budget() {
       editTitle: 'Modifica titolo',
       amount: 'Importo',
     },
+    ES: {
+      total: 'TOTAL',
+      remaining: 'RESTANTE',
+      noExpenses: 'Sin gastos',
+      addExpenseHint: 'Toca + para añadir uno',
+      noMonth: 'Ningún mes seleccionado',
+      createMonthHint: 'Crea un mes para empezar',
+      newExpense: 'Nuevo gasto',
+      expensePlaceholder: 'Nombre (ej. COMIDA)',
+      newEntry: 'Nueva entrada',
+      monthPlaceholder: 'Nombre (ej. ENERO)',
+      editName: 'Editar nombre',
+      duplicate: 'Duplicar',
+      unpin: 'Desfijar',
+      pin: 'Fijar',
+      delete: 'Eliminar',
+      cancel: 'Cancelar',
+      editAmount: 'Editar cantidad',
+      editBudget: 'Editar presupuesto',
+      editTitle: 'Editar título',
+      amount: 'Cantidad',
+    },
   };
 
   const t = content[language];

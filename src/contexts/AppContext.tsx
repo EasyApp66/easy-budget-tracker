@@ -41,8 +41,8 @@ interface AppContextType {
   updateUsername: (username: string) => Promise<void>;
   
   // Language
-  language: 'DE' | 'EN' | 'FR' | 'IT';
-  setLanguage: (lang: 'DE' | 'EN' | 'FR' | 'IT') => void;
+  language: 'DE' | 'EN' | 'FR' | 'IT' | 'ES';
+  setLanguage: (lang: 'DE' | 'EN' | 'FR' | 'IT' | 'ES') => void;
   
   // Months & Expenses
   months: Month[];
@@ -90,7 +90,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [language, setLanguageState] = useState<'DE' | 'EN' | 'FR' | 'IT'>('DE');
+  const [language, setLanguageState] = useState<'DE' | 'EN' | 'FR' | 'IT' | 'ES'>('DE');
   const [months, setMonths] = useState<Month[]>([]);
   const [activeMonthId, setActiveMonthIdState] = useState<string | null>(null);
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
@@ -171,7 +171,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       })));
 
       if (settingsData) {
-        setLanguageState(settingsData.language as 'DE' | 'EN' | 'FR' | 'IT');
+        setLanguageState(settingsData.language as 'DE' | 'EN' | 'FR' | 'IT' | 'ES');
         setActiveMonthIdState(settingsData.active_month_id);
       } else if (mappedMonths.length > 0) {
         setActiveMonthIdState(mappedMonths[0].id);
@@ -297,7 +297,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const setLanguage = async (newLang: 'DE' | 'EN' | 'FR' | 'IT') => {
+  const setLanguage = async (newLang: 'DE' | 'EN' | 'FR' | 'IT' | 'ES') => {
     setLanguageState(newLang);
     
     if (session?.user) {

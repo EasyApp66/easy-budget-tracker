@@ -50,6 +50,14 @@ export function FeedbackModal({ isOpen, onClose, type }: FeedbackModalProps) {
       success: 'Messaggio inviato!',
       error: "Errore durante l'invio",
     },
+    ES: {
+      support: { title: 'Solicitud de soporte', placeholder: 'Describe tu problema...' },
+      bug: { title: 'Reportar error', placeholder: 'Describe el error...' },
+      suggestion: { title: 'Sugerencia', placeholder: 'Comparte tu idea...' },
+      send: 'Enviar',
+      success: '¡Mensaje enviado!',
+      error: 'Error al enviar',
+    },
   };
 
   const t = content[language];
