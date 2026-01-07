@@ -2,12 +2,53 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Apple } from 'lucide-react';
 import { AGBDialog, NutzungsbedingungenDialog, DatenschutzDialog } from '@/components/LegalDialogs';
+import { useApp } from '@/contexts/AppContext';
 
 export default function Welcome() {
   const navigate = useNavigate();
+  const { language } = useApp();
   const [showNutzungsbedingungen, setShowNutzungsbedingungen] = useState(false);
   const [showDatenschutz, setShowDatenschutz] = useState(false);
   const [showAGB, setShowAGB] = useState(false);
+
+  const content = {
+    DE: {
+      hello: 'Hallo! Ich bin',
+      track: 'Tracke',
+      your: 'dein',
+      budget: 'BUDGET',
+      andYour: 'und deine',
+      abos: 'ABOS',
+      emailButton: 'Mit E-Mail fortfahren',
+      appleButton: 'Mit Apple fortfahren',
+      googleButton: 'Mit Google fortfahren',
+      footer: 'Indem du fortfährst, bestätigst du, dass du die',
+      termsOfUse: 'Nutzungsbedingungen',
+      and: 'und die',
+      privacy: 'Datenschutzerklärung',
+      agb: 'AGBs',
+      readText: 'gelesen hast.',
+    },
+    EN: {
+      hello: "Hi! I'm",
+      track: 'Track',
+      your: 'your',
+      budget: 'BUDGET',
+      andYour: 'and your',
+      abos: 'SUBSCRIPTIONS',
+      emailButton: 'Continue with Email',
+      appleButton: 'Continue with Apple',
+      googleButton: 'Continue with Google',
+      footer: 'By continuing, you confirm that you have read the',
+      termsOfUse: 'Terms of Use',
+      and: 'and the',
+      privacy: 'Privacy Policy',
+      agb: 'Terms & Conditions',
+      readText: '.',
+    },
+  };
+
+  const t = content[language];
 
   const handleEmailClick = () => {
     if ('vibrate' in navigator) navigator.vibrate(10);
@@ -25,7 +66,7 @@ export default function Welcome() {
       <div className="flex-1 flex flex-col justify-center">
         <div>
           <p className="text-display text-3xl text-foreground leading-tight">
-            Hallo! Ich bin
+            {t.hello}
           </p>
           <h1 className="text-display text-4xl text-primary leading-tight mt-1">
             EASY BUDGET
@@ -34,22 +75,22 @@ export default function Welcome() {
 
         <div className="mt-12">
           <p className="text-display text-5xl text-foreground leading-tight">
-            Tracke
+            {t.track}
           </p>
           <p className="text-display text-5xl text-foreground leading-tight">
-            dein
+            {t.your}
           </p>
           <p className="text-display text-6xl text-primary leading-tight">
-            BUDGET
+            {t.budget}
           </p>
         </div>
 
         <div className="mt-4">
           <p className="text-display text-5xl text-foreground leading-tight">
-            und deine
+            {t.andYour}
           </p>
           <p className="text-display text-6xl text-primary leading-tight">
-            ABOS
+            {t.abos}
           </p>
         </div>
       </div>
@@ -61,7 +102,7 @@ export default function Welcome() {
           className="w-full bg-primary text-primary-foreground font-bold text-lg py-5 rounded-2xl flex items-center justify-center gap-3 haptic-tap transition-all active:scale-98"
         >
           <Mail className="w-5 h-5" />
-          Mit E-Mail fortfahren
+          {t.emailButton}
         </button>
 
         <button
@@ -69,7 +110,7 @@ export default function Welcome() {
           className="w-full bg-foreground text-background font-bold text-lg py-5 rounded-2xl flex items-center justify-center gap-3 haptic-tap transition-all active:scale-98"
         >
           <Apple className="w-5 h-5" />
-          Mit Apple fortfahren
+          {t.appleButton}
         </button>
 
         <button
@@ -85,35 +126,35 @@ export default function Welcome() {
             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
           </svg>
-          Mit Google fortfahren
+          {t.googleButton}
         </button>
       </div>
 
       {/* Footer */}
       <div className="text-center text-sm text-muted-foreground">
         <p>
-          Indem du fortfährst, bestätigst du, dass du die{' '}
+          {t.footer}{' '}
           <button 
             onClick={() => setShowNutzungsbedingungen(true)}
             className="text-primary underline"
           >
-            Nutzungsbedingungen
+            {t.termsOfUse}
           </button>
-          {' '}und die{' '}
+          {' '}{t.and}{' '}
           <button 
             onClick={() => setShowDatenschutz(true)}
             className="text-primary underline"
           >
-            Datenschutzerklärung
+            {t.privacy}
           </button>
-          {' '}und die{' '}
+          {' '}{t.and}{' '}
           <button 
             onClick={() => setShowAGB(true)}
             className="text-primary underline"
           >
-            AGBs
+            {t.agb}
           </button>
-          {' '}gelesen hast.
+          {' '}{t.readText}
         </p>
       </div>
 

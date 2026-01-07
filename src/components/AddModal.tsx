@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useApp } from '@/contexts/AppContext';
 
 interface AddModalProps {
   isOpen: boolean;
@@ -6,13 +7,30 @@ interface AddModalProps {
   onAdd: (name: string, amount?: number) => boolean | Promise<boolean>;
   title: string;
   namePlaceholder: string;
+  amountPlaceholder?: string;
   hideAmount?: boolean;
 }
 
-export function AddModal({ isOpen, onClose, onAdd, title, namePlaceholder, hideAmount = false }: AddModalProps) {
+export function AddModal({ isOpen, onClose, onAdd, title, namePlaceholder, amountPlaceholder, hideAmount = false }: AddModalProps) {
+  const { language } = useApp();
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const content = {
+    DE: {
+      amount: 'Betrag',
+      cancel: 'Abbrechen',
+      add: 'Hinzufügen',
+    },
+    EN: {
+      amount: 'Amount',
+      cancel: 'Cancel',
+      add: 'Add',
+    },
+  };
+
+  const t = content[language];
 
   if (!isOpen) return null;
 
@@ -69,7 +87,7 @@ export function AddModal({ isOpen, onClose, onAdd, title, namePlaceholder, hideA
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              placeholder="Betrag"
+              placeholder={amountPlaceholder || t.amount}
               className="w-full bg-card rounded-xl px-4 py-4 text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 transition-all text-lg"
             />
           )}
@@ -81,14 +99,14 @@ export function AddModal({ isOpen, onClose, onAdd, title, namePlaceholder, hideA
             disabled={isSubmitting}
             className="flex-1 bg-secondary text-foreground font-bold py-4 rounded-xl haptic-tap transition-all disabled:opacity-50"
           >
-            Abbrechen
+            {t.cancel}
           </button>
           <button
             onClick={handleSubmit}
             disabled={isSubmitting}
             className="flex-1 bg-primary text-primary-foreground font-bold py-4 rounded-xl haptic-tap transition-all disabled:opacity-50"
           >
-            {isSubmitting ? '...' : 'Hinzufügen'}
+            {isSubmitting ? '...' : t.add}
           </button>
         </div>
       </div>
