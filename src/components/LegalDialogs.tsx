@@ -187,6 +187,40 @@ export function AGBDialog({ open, onOpenChange }: LegalDialogProps) {
         },
       ],
     },
+    PT: {
+      title: 'Termos e Condições Gerais',
+      date: 'Última atualização: Janeiro 2025',
+      sections: [
+        {
+          title: "1. Âmbito de aplicação",
+          text: 'Estes Termos e Condições aplicam-se ao uso do aplicativo Easy Budget (doravante "App"). Ao usar o App, você aceita plenamente estes termos.',
+        },
+        {
+          title: '2. Objeto do contrato',
+          text: "O App permite aos usuários gerenciar seu orçamento pessoal, rastrear despesas e assinaturas. O App é oferecido em uma versão básica gratuita e uma versão premium paga.",
+        },
+        {
+          title: '3. Registro e conta de usuário',
+          text: "É necessário se registrar para usar o App. Os usuários são obrigados a fornecer informações verdadeiras e manter suas credenciais de acesso confidenciais.",
+        },
+        {
+          title: '4. Recursos Premium',
+          text: 'A versão premium oferece recursos estendidos como meses, despesas e assinaturas ilimitados. Os preços e condições de pagamento são exibidos de forma transparente antes da compra.',
+        },
+        {
+          title: '5. Responsabilidade',
+          text: "O uso do App é por sua conta e risco. Não somos responsáveis por danos causados por entradas de dados incorretas ou interrupções técnicas, exceto em casos de negligência grave ou intenção.",
+        },
+        {
+          title: '6. Alterações nos termos',
+          text: "Reservamo-nos o direito de alterar estes termos a qualquer momento. As alterações serão comunicadas aos usuários oportunamente. O uso continuado do App constitui a aceitação dos termos modificados.",
+        },
+        {
+          title: '7. Lei aplicável e jurisdição',
+          text: 'Aplica-se a lei suíça. O foro competente é Zurique, Suíça.',
+        },
+      ],
+    },
   };
 
   const t = content[language];
@@ -365,6 +399,36 @@ export function NutzungsbedingungenDialog({ open, onOpenChange }: LegalDialogPro
         {
           title: '6. Cambios',
           text: "Nos reservamos el derecho de modificar estos términos según sea necesario. Los cambios significativos se comunicarán a los usuarios.",
+        },
+      ],
+    },
+    PT: {
+      title: "Condições de uso",
+      date: 'Última atualização: Janeiro 2025',
+      sections: [
+        {
+          title: "1. Direitos de uso",
+          text: "Ao se registrar, você recebe um direito não exclusivo e intransferível de usar o app Easy Budget para fins pessoais e não comerciais.",
+        },
+        {
+          title: "2. Obrigações do usuário",
+          text: "Os usuários concordam em não usar o App de forma indevida, não armazenar conteúdo ilegal e não contornar medidas de proteção técnica.",
+        },
+        {
+          title: '3. Disponibilidade',
+          text: "Nos esforçamos para alta disponibilidade do App, mas não podemos garantir disponibilidade ininterrupta. Os trabalhos de manutenção serão anunciados quando possível.",
+        },
+        {
+          title: '4. Armazenamento de dados',
+          text: "Os dados inseridos pelos usuários são armazenados localmente em seu dispositivo. Os usuários são responsáveis por fazer backup de seus próprios dados.",
+        },
+        {
+          title: '5. Rescisão',
+          text: "Os usuários podem excluir sua conta a qualquer momento. Em caso de violação destes termos, reservamo-nos o direito de bloquear o acesso ao App.",
+        },
+        {
+          title: '6. Alterações',
+          text: "Reservamo-nos o direito de modificar estes termos conforme necessário. Alterações significativas serão comunicadas aos usuários.",
         },
       ],
     },
@@ -574,6 +638,41 @@ export function DatenschutzDialog({ open, onOpenChange }: LegalDialogProps) {
         },
       ],
     },
+    PT: {
+      title: 'Política de Privacidade',
+      date: 'Última atualização: Janeiro 2025',
+      sections: [
+        {
+          title: '1. Responsável',
+          text: 'Ivan Mirosnic\nAhornstrasse\n8600 Dübendorf\nSuíça',
+        },
+        {
+          title: '2. Dados coletados',
+          text: "Coletamos apenas seus dados de login (endereço de e-mail e senha). Nenhum outro dado pessoal é coletado ou armazenado.",
+          highlight: true,
+        },
+        {
+          title: '3. Armazenamento local de dados',
+          text: "Todos os seus dados de orçamento, despesas e assinaturas são armazenados exclusivamente em seu dispositivo. Esses dados não são transmitidos para nossos servidores.",
+        },
+        {
+          title: "4. Finalidade do uso",
+          text: "Seus dados de login são usados exclusivamente para autenticação e acesso ao App.",
+        },
+        {
+          title: '5. Compartilhamento de dados',
+          text: 'Não compartilhamos seus dados com terceiros, exceto quando exigido por lei.',
+        },
+        {
+          title: '6. Seus direitos',
+          text: "De acordo com a lei suíça de proteção de dados (LPD), você tem o direito de acessar, corrigir e excluir seus dados. Entre em contato conosco em support@easybudget.app.",
+        },
+        {
+          title: '7. Segurança de dados',
+          text: "Implementamos medidas técnicas e organizacionais apropriadas para proteger seus dados de acordo com os requisitos da lei suíça de proteção de dados.",
+        },
+      ],
+    },
   };
 
   const t = content[language];
@@ -749,6 +848,35 @@ export function ImpressumDialog({ open, onOpenChange }: LegalDialogProps) {
         {
           title: 'Ley aplicable',
           text: "Se aplica exclusivamente la ley suiza. El lugar de jurisdicción es Zúrich.",
+        },
+      ],
+    },
+    PT: {
+      title: 'Aviso legal',
+      sections: [
+        {
+          title: 'Informações de acordo com a lei suíça',
+          text: '',
+        },
+        {
+          title: "Operador do app",
+          text: 'Ivan Mirosnic\nAhornstrasse\n8600 Dübendorf\nSuíça',
+        },
+        {
+          title: 'Contato',
+          text: 'Email: support@easybudget.app',
+        },
+        {
+          title: 'Isenção de responsabilidade',
+          text: "O autor não assume responsabilidade pela exatidão, precisão, atualidade, confiabilidade e integridade das informações.\n\nAs reivindicações de responsabilidade contra o autor por danos materiais ou imateriais decorrentes do acesso ou uso ou não uso das informações publicadas são excluídas.",
+        },
+        {
+          title: "Direitos autorais",
+          text: "Os direitos autorais e todos os outros direitos sobre o conteúdo, imagens, fotos ou outros arquivos no App pertencem exclusivamente a Ivan Mirosnic ou aos titulares de direitos especificamente mencionados.",
+        },
+        {
+          title: 'Lei aplicável',
+          text: "Aplica-se exclusivamente a lei suíça. O foro competente é Zurique.",
         },
       ],
     },
