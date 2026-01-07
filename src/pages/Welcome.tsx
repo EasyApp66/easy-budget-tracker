@@ -80,6 +80,23 @@ export default function Welcome() {
       agb: 'Termini e Condizioni',
       readText: '.',
     },
+    ES: {
+      hello: '¡Hola! Soy',
+      track: 'Rastrea',
+      your: 'tu',
+      budget: 'PRESUPUESTO',
+      andYour: 'y tus',
+      abos: 'SUSCRIPCIONES',
+      emailButton: 'Continuar con Email',
+      appleButton: 'Continuar con Apple',
+      googleButton: 'Continuar con Google',
+      footer: 'Al continuar, confirmas que has leído los',
+      termsOfUse: 'Términos de uso',
+      and: 'y la',
+      privacy: 'Política de privacidad',
+      agb: 'Términos y Condiciones',
+      readText: '.',
+    },
   };
 
   const t = content[language];
