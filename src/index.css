@@ -164,32 +164,6 @@
   .safe-top {
     padding-top: env(safe-area-inset-top, 20px);
   }
-
-  /* Page transition animations */
-  .page-transition {
-    @apply w-full min-h-screen;
-    will-change: transform, opacity;
-  }
-
-  .page-enter {
-    animation: pageEnter 0.3s ease-out forwards;
-  }
-
-  .page-enter-right {
-    animation: pageEnterRight 0.25s ease-out forwards;
-  }
-
-  .page-enter-left {
-    animation: pageEnterLeft 0.25s ease-out forwards;
-  }
-
-  .page-exit-left {
-    animation: pageExitLeft 0.15s ease-in forwards;
-  }
-
-  .page-exit-right {
-    animation: pageExitRight 0.15s ease-in forwards;
-  }
 }
 
 @keyframes fadeIn {
@@ -239,70 +213,6 @@
   0% { transform: scale(1); }
   50% { transform: scale(0.97); }
   100% { transform: scale(1); }
-}
-
-/* Page transition keyframes */
-@keyframes pageEnter {
-  from { 
-    opacity: 0;
-  }
-  to { 
-    opacity: 1;
-  }
-}
-
-@keyframes pageEnterRight {
-  from { 
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to { 
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pageEnterLeft {
-  from { 
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to { 
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pageExitLeft {
-  from { 
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to { 
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-}
-
-@keyframes pageExitRight {
-  from { 
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to { 
-    opacity: 0;
-    transform: translateX(20px);
-  }
-}
-
-/* Snowfall animation */
-@keyframes snowfall {
-  0% {
-    transform: translateY(-10px) rotate(0deg);
-  }
-  100% {
-    transform: translateY(100vh) rotate(360deg);
-  }
 }
 
 /* Custom scrollbar */
