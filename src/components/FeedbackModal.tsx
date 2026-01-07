@@ -58,6 +58,14 @@ export function FeedbackModal({ isOpen, onClose, type }: FeedbackModalProps) {
       success: '¡Mensaje enviado!',
       error: 'Error al enviar',
     },
+    PT: {
+      support: { title: 'Solicitação de suporte', placeholder: 'Descreva seu problema...' },
+      bug: { title: 'Reportar erro', placeholder: 'Descreva o erro...' },
+      suggestion: { title: 'Sugestão', placeholder: 'Compartilhe sua ideia...' },
+      send: 'Enviar',
+      success: 'Mensagem enviada!',
+      error: 'Erro ao enviar',
+    },
   };
 
   const t = content[language];

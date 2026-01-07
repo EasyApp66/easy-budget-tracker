@@ -153,6 +153,28 @@ export default function Budget() {
       editTitle: 'Editar título',
       amount: 'Cantidad',
     },
+    PT: {
+      total: 'TOTAL',
+      remaining: 'RESTANTE',
+      noExpenses: 'Sem despesas',
+      addExpenseHint: 'Toque em + para adicionar',
+      noMonth: 'Nenhum mês selecionado',
+      createMonthHint: 'Crie um mês para começar',
+      newExpense: 'Nova despesa',
+      expensePlaceholder: 'Nome (ex. COMIDA)',
+      newEntry: 'Nova entrada',
+      monthPlaceholder: 'Nome (ex. JANEIRO)',
+      editName: 'Editar nome',
+      duplicate: 'Duplicar',
+      unpin: 'Desafixar',
+      pin: 'Fixar',
+      delete: 'Excluir',
+      cancel: 'Cancelar',
+      editAmount: 'Editar valor',
+      editBudget: 'Editar orçamento',
+      editTitle: 'Editar título',
+      amount: 'Valor',
+    },
   };
 
   const t = content[language];

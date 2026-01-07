@@ -42,6 +42,12 @@ export default function PaymentSuccess() {
       premiumActive: 'Tu estado premium ahora está activo.',
       backToApp: 'Volver a la app',
     },
+    PT: {
+      verifying: 'Verificando pagamento...',
+      success: 'Pagamento bem-sucedido!',
+      premiumActive: 'Seu status premium agora está ativo.',
+      backToApp: 'Voltar ao app',
+    },
   };
 
   const t = content[language];

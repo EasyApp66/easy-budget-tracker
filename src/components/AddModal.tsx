@@ -43,6 +43,11 @@ export function AddModal({ isOpen, onClose, onAdd, title, namePlaceholder, amoun
       cancel: 'Cancelar',
       add: 'Añadir',
     },
+    PT: {
+      amount: 'Valor',
+      cancel: 'Cancelar',
+      add: 'Adicionar',
+    },
   };
 
   const t = content[language];
