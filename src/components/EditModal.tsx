@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useApp } from '@/contexts/AppContext';
 
 interface EditModalProps {
   isOpen: boolean;
@@ -10,7 +11,21 @@ interface EditModalProps {
 }
 
 export function EditModal({ isOpen, onClose, onSave, title, currentValue, type }: EditModalProps) {
+  const { language } = useApp();
   const [value, setValue] = useState(String(currentValue));
+
+  const content = {
+    DE: {
+      cancel: 'Abbrechen',
+      save: 'Speichern',
+    },
+    EN: {
+      cancel: 'Cancel',
+      save: 'Save',
+    },
+  };
+
+  const t = content[language];
 
   useEffect(() => {
     setValue(String(currentValue));
@@ -46,13 +61,13 @@ export function EditModal({ isOpen, onClose, onSave, title, currentValue, type }
             onClick={onClose}
             className="flex-1 bg-secondary text-foreground font-bold py-4 rounded-xl haptic-tap transition-all"
           >
-            Abbrechen
+            {t.cancel}
           </button>
           <button
             onClick={handleSave}
             className="flex-1 bg-primary text-primary-foreground font-bold py-4 rounded-xl haptic-tap transition-all"
           >
-            Speichern
+            {t.save}
           </button>
         </div>
       </div>

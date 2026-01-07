@@ -46,12 +46,69 @@ export default function Profile() {
   const [feedbackType, setFeedbackType] = useState<'support' | 'bug' | 'suggestion' | null>(null);
   const [showDonation, setShowDonation] = useState(false);
 
+  const content = {
+    DE: {
+      tapToChangeName: 'Tippe um Namen zu ändern',
+      enterName: 'Name eingeben',
+      premium: 'Premium',
+      yes: 'Ja',
+      no: 'Nein',
+      logout: 'Ausloggen',
+      changeLanguage: 'Sprache ändern',
+      german: 'Deutsch',
+      english: 'English',
+      restorePremium: 'Premium Wiederherstellen',
+      buyPremium: 'Premium Kaufen',
+      agb: 'AGB',
+      termsOfUse: 'Nutzungsbedingungen',
+      privacy: 'Datenschutz',
+      imprint: 'Impressum',
+      support: 'Support',
+      reportBug: 'Bug Melden',
+      suggestion: 'Vorschlag',
+      donation: 'Donation',
+      version: 'Version',
+      madeWith: 'Made with',
+      shareText: 'Schau dir diese tolle Budget-App an!',
+      linkCopied: 'Link kopiert!',
+      donationSuccess: 'Vielen Dank für deine Spende! ❤️',
+    },
+    EN: {
+      tapToChangeName: 'Tap to change name',
+      enterName: 'Enter name',
+      premium: 'Premium',
+      yes: 'Yes',
+      no: 'No',
+      logout: 'Logout',
+      changeLanguage: 'Change Language',
+      german: 'Deutsch',
+      english: 'English',
+      restorePremium: 'Restore Premium',
+      buyPremium: 'Buy Premium',
+      agb: 'Terms & Conditions',
+      termsOfUse: 'Terms of Use',
+      privacy: 'Privacy Policy',
+      imprint: 'Imprint',
+      support: 'Support',
+      reportBug: 'Report Bug',
+      suggestion: 'Suggestion',
+      donation: 'Donation',
+      version: 'Version',
+      madeWith: 'Made with',
+      shareText: 'Check out this great budget app!',
+      linkCopied: 'Link copied!',
+      donationSuccess: 'Thank you for your donation! ❤️',
+    },
+  };
+
+  const t = content[language];
+
   // Check for donation success
   useEffect(() => {
     if (searchParams.get('donation') === 'success') {
-      toast.success(language === 'DE' ? 'Vielen Dank für deine Spende! ❤️' : 'Thank you for your donation! ❤️');
+      toast.success(t.donationSuccess);
     }
-  }, [searchParams, language]);
+  }, [searchParams, t.donationSuccess]);
 
   const handleLogout = async () => {
     if ('vibrate' in navigator) navigator.vibrate(10);
@@ -75,73 +132,73 @@ export default function Profile() {
   const menuItems = [
     {
       icon: LogOut,
-      label: 'Ausloggen',
+      label: t.logout,
       onClick: handleLogout,
       iconColor: 'text-primary',
     },
     {
       icon: Globe,
-      label: `Sprache ändern: ${language === 'DE' ? 'Deutsch' : 'English'}`,
+      label: `${t.changeLanguage}: ${language === 'DE' ? t.german : t.english}`,
       onClick: toggleLanguage,
       iconColor: 'text-primary',
     },
     {
       icon: RefreshCw,
-      label: 'Premium Wiederherstellen',
+      label: t.restorePremium,
       onClick: handlePremiumRestore,
       iconColor: 'text-primary',
     },
     {
       icon: Star,
-      label: 'Premium Kaufen',
+      label: t.buyPremium,
       onClick: () => setShowPremiumPopup(true),
       iconColor: 'text-primary',
     },
     {
       icon: FileText,
-      label: 'AGB',
+      label: t.agb,
       onClick: () => setShowAGB(true),
       iconColor: 'text-muted-foreground',
     },
     {
       icon: Shield,
-      label: 'Nutzungsbedingungen',
+      label: t.termsOfUse,
       onClick: () => setShowNutzungsbedingungen(true),
       iconColor: 'text-muted-foreground',
     },
     {
       icon: Lock,
-      label: 'Datenschutz',
+      label: t.privacy,
       onClick: () => setShowDatenschutz(true),
       iconColor: 'text-muted-foreground',
     },
     {
       icon: Building,
-      label: 'Impressum',
+      label: t.imprint,
       onClick: () => setShowImpressum(true),
       iconColor: 'text-muted-foreground',
     },
     {
       icon: HelpCircle,
-      label: 'Support',
+      label: t.support,
       onClick: () => setFeedbackType('support'),
       iconColor: 'text-muted-foreground',
     },
     {
       icon: Bug,
-      label: 'Bug Melden',
+      label: t.reportBug,
       onClick: () => setFeedbackType('bug'),
       iconColor: 'text-muted-foreground',
     },
     {
       icon: Lightbulb,
-      label: 'Vorschlag',
+      label: t.suggestion,
       onClick: () => setFeedbackType('suggestion'),
       iconColor: 'text-muted-foreground',
     },
     {
       icon: Heart,
-      label: 'Donation',
+      label: t.donation,
       onClick: () => setShowDonation(true),
       iconColor: 'text-destructive',
     },
@@ -167,7 +224,7 @@ export default function Profile() {
               onKeyDown={(e) => e.key === 'Enter' && handleSaveName()}
               autoFocus
               className="text-display text-2xl text-foreground text-center mb-1 bg-transparent border-b-2 border-primary outline-none"
-              placeholder="Name eingeben"
+              placeholder={t.enterName}
             />
           ) : (
             <button
@@ -178,7 +235,7 @@ export default function Profile() {
               className="flex items-center gap-2 mb-1 group"
             >
               <h2 className="text-display text-2xl text-foreground text-center">
-                {user?.username || 'Name eingeben'}
+                {user?.username || t.enterName}
               </h2>
               <Pencil className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
             </button>
@@ -186,13 +243,13 @@ export default function Profile() {
 
           {/* Hint text */}
           <p className="text-muted-foreground text-sm text-center mb-4">
-            Tippe um Namen zu ändern
+            {t.tapToChangeName}
           </p>
 
           {/* Premium Status */}
           <div className="bg-secondary rounded-full px-6 py-2">
             <p className="text-foreground font-semibold">
-              Premium: {user?.isPremium ? 'Ja' : 'Nein'}
+              {t.premium}: {user?.isPremium ? t.yes : t.no}
             </p>
           </div>
         </div>
@@ -219,9 +276,9 @@ export default function Profile() {
 
         {/* Footer */}
         <div className="text-center py-8">
-          <p className="text-muted-foreground text-sm">Version 1.0.0</p>
+          <p className="text-muted-foreground text-sm">{t.version} 1.0.0</p>
           <p className="text-muted-foreground text-sm mt-1">
-            Made with <span className="text-destructive">❤️</span>
+            {t.madeWith} <span className="text-destructive">❤️</span>
           </p>
         </div>
       </div>
@@ -230,9 +287,7 @@ export default function Profile() {
         if ('vibrate' in navigator) navigator.vibrate(10);
         const shareData = {
           title: 'EasyBudget',
-          text: language === 'DE' 
-            ? 'Schau dir diese tolle Budget-App an!' 
-            : 'Check out this great budget app!',
+          text: t.shareText,
           url: window.location.origin,
         };
         
@@ -241,14 +296,13 @@ export default function Profile() {
             await navigator.share(shareData);
           } catch (err) {
             if ((err as Error).name !== 'AbortError') {
-              // User cancelled, no action needed
               await navigator.clipboard.writeText(window.location.origin);
-              toast.success(language === 'DE' ? 'Link kopiert!' : 'Link copied!');
+              toast.success(t.linkCopied);
             }
           }
         } else {
           await navigator.clipboard.writeText(window.location.origin);
-          toast.success(language === 'DE' ? 'Link kopiert!' : 'Link copied!');
+          toast.success(t.linkCopied);
         }
       }} />
       <PremiumPopup />

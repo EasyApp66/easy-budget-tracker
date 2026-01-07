@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login, register } = useApp();
+  const { login, register, language } = useApp();
   const [isRegister, setIsRegister] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -15,6 +15,69 @@ export default function Login() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const content = {
+    DE: {
+      forgotPasswordTitle: 'Passwort vergessen',
+      createAccountTitle: 'Konto erstellen',
+      welcomeBackTitle: 'Willkommen zurück',
+      forgotPasswordSubtitle: 'Gib deine E-Mail ein, um dein Passwort zurückzusetzen',
+      createAccountSubtitle: 'Erstelle ein neues Konto',
+      loginSubtitle: 'Melde dich an, um fortzufahren',
+      emailLabel: 'E-Mail',
+      emailPlaceholder: 'deine@email.com',
+      passwordLabel: 'Passwort',
+      confirmPasswordLabel: 'Passwort bestätigen',
+      sendLink: 'Link senden',
+      sending: 'Wird gesendet...',
+      backToLogin: 'Zurück zur',
+      login: 'Anmeldung',
+      forgotPassword: 'Passwort vergessen?',
+      loading: 'Wird geladen...',
+      registerBtn: 'Registrieren',
+      loginBtn: 'Anmelden',
+      alreadyHaveAccount: 'Bereits ein Konto?',
+      noAccount: 'Noch kein Konto?',
+      fillAllFields: 'Bitte alle Felder ausfüllen',
+      passwordMinLength: 'Passwort muss mindestens 6 Zeichen lang sein',
+      passwordsNoMatch: 'Passwörter stimmen nicht überein',
+      accountCreated: 'Konto erfolgreich erstellt!',
+      resetEmailSent: 'E-Mail zum Zurücksetzen des Passworts wurde gesendet!',
+      enterEmail: 'Bitte gib deine E-Mail-Adresse ein',
+      errorOccurred: 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.',
+    },
+    EN: {
+      forgotPasswordTitle: 'Forgot Password',
+      createAccountTitle: 'Create Account',
+      welcomeBackTitle: 'Welcome Back',
+      forgotPasswordSubtitle: 'Enter your email to reset your password',
+      createAccountSubtitle: 'Create a new account',
+      loginSubtitle: 'Sign in to continue',
+      emailLabel: 'Email',
+      emailPlaceholder: 'your@email.com',
+      passwordLabel: 'Password',
+      confirmPasswordLabel: 'Confirm Password',
+      sendLink: 'Send Link',
+      sending: 'Sending...',
+      backToLogin: 'Back to',
+      login: 'Login',
+      forgotPassword: 'Forgot password?',
+      loading: 'Loading...',
+      registerBtn: 'Register',
+      loginBtn: 'Sign In',
+      alreadyHaveAccount: 'Already have an account?',
+      noAccount: "Don't have an account?",
+      fillAllFields: 'Please fill in all fields',
+      passwordMinLength: 'Password must be at least 6 characters',
+      passwordsNoMatch: "Passwords don't match",
+      accountCreated: 'Account created successfully!',
+      resetEmailSent: 'Password reset email has been sent!',
+      enterEmail: 'Please enter your email address',
+      errorOccurred: 'An error occurred. Please try again.',
+    },
+  };
+
+  const t = content[language];
 
   const handleBack = () => {
     if ('vibrate' in navigator) navigator.vibrate(10);
@@ -31,7 +94,7 @@ export default function Login() {
     setError('');
 
     if (!email) {
-      setError('Bitte gib deine E-Mail-Adresse ein');
+      setError(t.enterEmail);
       return;
     }
 
@@ -44,11 +107,11 @@ export default function Login() {
       if (error) {
         setError(error.message);
       } else {
-        toast.success('E-Mail zum Zurücksetzen des Passworts wurde gesendet!');
+        toast.success(t.resetEmailSent);
         setIsForgotPassword(false);
       }
     } catch (err) {
-      setError('Ein Fehler ist aufgetreten. Bitte versuche es erneut.');
+      setError(t.errorOccurred);
     } finally {
       setIsLoading(false);
     }
@@ -59,12 +122,12 @@ export default function Login() {
     setError('');
 
     if (!email || !password) {
-      setError('Bitte alle Felder ausfüllen');
+      setError(t.fillAllFields);
       return;
     }
 
     if (password.length < 6) {
-      setError('Passwort muss mindestens 6 Zeichen lang sein');
+      setError(t.passwordMinLength);
       return;
     }
 
@@ -72,7 +135,7 @@ export default function Login() {
 
     if (isRegister) {
       if (password !== confirmPassword) {
-        setError('Passwörter stimmen nicht überein');
+        setError(t.passwordsNoMatch);
         setIsLoading(false);
         return;
       }
@@ -81,7 +144,7 @@ export default function Login() {
         setError(error);
         setIsLoading(false);
       } else {
-        toast.success('Konto erfolgreich erstellt!');
+        toast.success(t.accountCreated);
         navigate('/budget');
       }
     } else {
@@ -109,36 +172,36 @@ export default function Login() {
       <div className="mb-8">
         <h1 className="text-display text-4xl text-foreground leading-tight">
           {isForgotPassword 
-            ? 'Passwort vergessen' 
+            ? t.forgotPasswordTitle 
             : isRegister 
-              ? 'Konto erstellen' 
-              : 'Willkommen zurück'}
+              ? t.createAccountTitle 
+              : t.welcomeBackTitle}
         </h1>
         <p className="text-muted-foreground text-lg mt-2">
           {isForgotPassword
-            ? 'Gib deine E-Mail ein, um dein Passwort zurückzusetzen'
+            ? t.forgotPasswordSubtitle
             : isRegister 
-              ? 'Erstelle ein neues Konto' 
-              : 'Melde dich an, um fortzufahren'}
+              ? t.createAccountSubtitle 
+              : t.loginSubtitle}
         </p>
       </div>
 
       {/* Form */}
       <div className="space-y-4">
         <div>
-          <label className="text-label text-sm text-foreground mb-2 block">E-Mail</label>
+          <label className="text-label text-sm text-foreground mb-2 block">{t.emailLabel}</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="deine@email.com"
+            placeholder={t.emailPlaceholder}
             className="w-full bg-card rounded-xl px-4 py-4 text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 transition-all"
           />
         </div>
 
         {!isForgotPassword && (
           <div>
-            <label className="text-label text-sm text-foreground mb-2 block">Passwort</label>
+            <label className="text-label text-sm text-foreground mb-2 block">{t.passwordLabel}</label>
             <input
               type="password"
               value={password}
@@ -151,7 +214,7 @@ export default function Login() {
 
         {isRegister && !isForgotPassword && (
           <div>
-            <label className="text-label text-sm text-foreground mb-2 block">Passwort bestätigen</label>
+            <label className="text-label text-sm text-foreground mb-2 block">{t.confirmPasswordLabel}</label>
             <input
               type="password"
               value={confirmPassword}
@@ -176,7 +239,7 @@ export default function Login() {
               disabled={isLoading}
               className="w-full bg-primary text-primary-foreground font-bold text-lg py-5 rounded-2xl haptic-tap transition-all active:scale-98 disabled:opacity-50"
             >
-              {isLoading ? 'Wird gesendet...' : 'Link senden'}
+              {isLoading ? t.sending : t.sendLink}
             </button>
             <button
               onClick={() => {
@@ -185,7 +248,7 @@ export default function Login() {
               }}
               className="w-full text-muted-foreground text-center py-2"
             >
-              Zurück zur <span className="text-primary font-semibold">Anmeldung</span>
+              {t.backToLogin} <span className="text-primary font-semibold">{t.login}</span>
             </button>
           </>
         ) : (
@@ -198,7 +261,7 @@ export default function Login() {
                 }}
                 className="w-full text-primary font-semibold text-center py-2"
               >
-                Passwort vergessen?
+                {t.forgotPassword}
               </button>
             )}
 
@@ -207,7 +270,7 @@ export default function Login() {
               disabled={isLoading}
               className="w-full bg-primary text-primary-foreground font-bold text-lg py-5 rounded-2xl haptic-tap transition-all active:scale-98 disabled:opacity-50"
             >
-              {isLoading ? 'Wird geladen...' : isRegister ? 'Registrieren' : 'Anmelden'}
+              {isLoading ? t.loading : isRegister ? t.registerBtn : t.loginBtn}
             </button>
 
             <button
@@ -217,9 +280,9 @@ export default function Login() {
               }}
               className="w-full text-muted-foreground text-center py-2"
             >
-              {isRegister ? 'Bereits ein Konto? ' : 'Noch kein Konto? '}
+              {isRegister ? t.alreadyHaveAccount + ' ' : t.noAccount + ' '}
               <span className="text-primary font-semibold">
-                {isRegister ? 'Anmelden' : 'Registrieren'}
+                {isRegister ? t.loginBtn : t.registerBtn}
               </span>
             </button>
           </>
