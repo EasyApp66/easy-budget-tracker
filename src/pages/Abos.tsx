@@ -82,6 +82,23 @@ export default function Abos() {
       cancel: 'Annuler',
       amount: 'Montant',
     },
+    IT: {
+      aboCosts: 'COSTI ABBONAMENTI',
+      total: 'TOTALE',
+      noAbos: 'Nessun abbonamento',
+      addHint: 'Tocca + per aggiungerne uno',
+      swipeHint: '← Scorri per eliminare • Scorri per fissare →',
+      newAbo: 'Nuovo abbonamento',
+      namePlaceholder: 'Nome (es. Netflix)',
+      editName: 'Modifica nome',
+      editAmount: 'Modifica importo',
+      duplicate: 'Duplica',
+      unpin: 'Sblocca',
+      pin: 'Fissa',
+      delete: 'Elimina',
+      cancel: 'Annulla',
+      amount: 'Importo',
+    },
   };
 
   const t = content[language];

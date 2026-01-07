@@ -34,6 +34,22 @@ export function FeedbackModal({ isOpen, onClose, type }: FeedbackModalProps) {
       success: 'Message sent!',
       error: 'Error sending message',
     },
+    FR: {
+      support: { title: 'Demande de support', placeholder: 'Décrivez votre problème...' },
+      bug: { title: 'Signaler un bug', placeholder: 'Décrivez le bug...' },
+      suggestion: { title: 'Suggestion', placeholder: 'Partagez votre idée...' },
+      send: 'Envoyer',
+      success: 'Message envoyé!',
+      error: "Erreur lors de l'envoi",
+    },
+    IT: {
+      support: { title: 'Richiesta supporto', placeholder: 'Descrivi il tuo problema...' },
+      bug: { title: 'Segnala bug', placeholder: 'Descrivi il bug...' },
+      suggestion: { title: 'Suggerimento', placeholder: 'Condividi la tua idea...' },
+      send: 'Invia',
+      success: 'Messaggio inviato!',
+      error: "Errore durante l'invio",
+    },
   };
 
   const t = content[language];

@@ -33,6 +33,11 @@ export function AddModal({ isOpen, onClose, onAdd, title, namePlaceholder, amoun
       cancel: 'Annuler',
       add: 'Ajouter',
     },
+    IT: {
+      amount: 'Importo',
+      cancel: 'Annulla',
+      add: 'Aggiungi',
+    },
   };
 
   const t = content[language];
