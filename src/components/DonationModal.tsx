@@ -27,6 +27,7 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
       donate: 'Spenden',
       thanks: 'Vielen Dank! ❤️',
       error: 'Fehler beim Starten der Zahlung',
+      minAmount: 'Mindestbetrag ist CHF 1.00',
     },
     EN: {
       title: 'Donate',
@@ -35,6 +36,16 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
       donate: 'Donate',
       thanks: 'Thank you! ❤️',
       error: 'Error starting payment',
+      minAmount: 'Minimum amount is CHF 1.00',
+    },
+    FR: {
+      title: 'Faire un don',
+      subtitle: 'Soutenez le développement de l\'app',
+      custom: 'Montant personnalisé',
+      donate: 'Donner',
+      thanks: 'Merci beaucoup ! ❤️',
+      error: 'Erreur lors du démarrage du paiement',
+      minAmount: 'Le montant minimum est de CHF 1.00',
     },
   };
 
@@ -43,7 +54,7 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
   const handleDonate = async () => {
     const finalAmount = customAmount ? parseFloat(customAmount) : amount;
     if (!finalAmount || finalAmount < 1) {
-      toast.error(language === 'DE' ? 'Mindestbetrag ist CHF 1.00' : 'Minimum amount is CHF 1.00');
+      toast.error(t.minAmount);
       return;
     }
 
