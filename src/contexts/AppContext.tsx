@@ -41,8 +41,8 @@ interface AppContextType {
   updateUsername: (username: string) => Promise<void>;
   
   // Language
-  language: 'DE' | 'EN';
-  toggleLanguage: () => void;
+  language: 'DE' | 'EN' | 'FR';
+  setLanguage: (lang: 'DE' | 'EN' | 'FR') => void;
   
   // Months & Expenses
   months: Month[];
@@ -90,7 +90,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [language, setLanguage] = useState<'DE' | 'EN'>('DE');
+  const [language, setLanguageState] = useState<'DE' | 'EN' | 'FR'>('DE');
   const [months, setMonths] = useState<Month[]>([]);
   const [activeMonthId, setActiveMonthIdState] = useState<string | null>(null);
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
@@ -171,7 +171,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       })));
 
       if (settingsData) {
-        setLanguage(settingsData.language as 'DE' | 'EN');
+        setLanguageState(settingsData.language as 'DE' | 'EN' | 'FR');
         setActiveMonthIdState(settingsData.active_month_id);
       } else if (mappedMonths.length > 0) {
         setActiveMonthIdState(mappedMonths[0].id);
@@ -297,9 +297,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const toggleLanguage = async () => {
-    const newLang = language === 'DE' ? 'EN' : 'DE';
-    setLanguage(newLang);
+  const setLanguage = async (newLang: 'DE' | 'EN' | 'FR') => {
+    setLanguageState(newLang);
     
     if (session?.user) {
       await supabase
@@ -826,7 +825,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       logout,
       updateUsername,
       language,
-      toggleLanguage,
+      setLanguage,
       months,
       activeMonthId,
       addMonth,

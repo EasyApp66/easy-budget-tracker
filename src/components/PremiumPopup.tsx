@@ -26,7 +26,7 @@ export function PremiumPopup() {
 
       if (error) {
         console.error('Checkout error:', error);
-        toast.error(language === 'DE' ? 'Fehler beim Starten der Zahlung' : 'Error starting payment');
+        toast.error(language === 'DE' ? 'Fehler beim Starten der Zahlung' : language === 'EN' ? 'Error starting payment' : 'Erreur lors du démarrage du paiement');
         return;
       }
 
@@ -35,7 +35,7 @@ export function PremiumPopup() {
       }
     } catch (err) {
       console.error('Error:', err);
-      toast.error(language === 'DE' ? 'Fehler beim Starten der Zahlung' : 'Error starting payment');
+      toast.error(language === 'DE' ? 'Fehler beim Starten der Zahlung' : language === 'EN' ? 'Error starting payment' : 'Erreur lors du démarrage du paiement');
     } finally {
       setLoading(false);
     }
@@ -67,6 +67,19 @@ export function PremiumPopup() {
       monthly: 'Monthly Subscription',
       pay: 'Pay',
       or: 'OR',
+    },
+    FR: {
+      title: 'Acheter Premium',
+      subtitle: "Obtenez des fonctionnalités illimitées:",
+      features: [
+        "Compteur d'abonnements illimité",
+        'Liste de dépenses illimitée',
+        'Mois illimités',
+      ],
+      oneTime: 'Paiement unique',
+      monthly: 'Abonnement mensuel',
+      pay: 'Payer',
+      or: 'OU',
     },
   };
 
@@ -128,7 +141,7 @@ export function PremiumPopup() {
           {/* Monthly */}
           <div className="border-2 border-primary rounded-2xl p-4">
             <p className="font-bold text-lg">{t.monthly}</p>
-            <p className="text-primary text-xl font-bold mb-3">CHF 1.00/Monat</p>
+            <p className="text-primary text-xl font-bold mb-3">CHF 1.00/{language === 'DE' ? 'Monat' : language === 'EN' ? 'month' : 'mois'}</p>
             <button 
               onClick={() => handleCheckout(PRICES.monthly, 'subscription', setLoadingMonthly)}
               disabled={loadingOneTime || loadingMonthly}

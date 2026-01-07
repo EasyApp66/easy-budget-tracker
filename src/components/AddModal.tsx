@@ -28,6 +28,11 @@ export function AddModal({ isOpen, onClose, onAdd, title, namePlaceholder, amoun
       cancel: 'Cancel',
       add: 'Add',
     },
+    FR: {
+      amount: 'Montant',
+      cancel: 'Annuler',
+      add: 'Ajouter',
+    },
   };
 
   const t = content[language];

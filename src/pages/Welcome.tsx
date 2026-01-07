@@ -46,6 +46,23 @@ export default function Welcome() {
       agb: 'Terms & Conditions',
       readText: '.',
     },
+    FR: {
+      hello: 'Bonjour! Je suis',
+      track: 'Suivez',
+      your: 'votre',
+      budget: 'BUDGET',
+      andYour: 'et vos',
+      abos: 'ABONNEMENTS',
+      emailButton: 'Continuer avec Email',
+      appleButton: 'Continuer avec Apple',
+      googleButton: 'Continuer avec Google',
+      footer: 'En continuant, vous confirmez avoir lu les',
+      termsOfUse: "Conditions d'utilisation",
+      and: 'et la',
+      privacy: 'Politique de confidentialité',
+      agb: 'CGV',
+      readText: '.',
+    },
   };
 
   const t = content[language];
