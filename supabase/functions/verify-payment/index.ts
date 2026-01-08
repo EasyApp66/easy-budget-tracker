@@ -1,11 +1,20 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@18.5.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
+import { z } from "https://esm.sh/zod@3.23.8";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+// Input validation schema
+const VerifyPaymentSchema = z.object({
+  sessionId: z.string()
+    .min(1, "Session ID is required")
+    .max(200)
+    .regex(/^cs_/, "Invalid session ID format"),
+});
 
 const logStep = (step: string, details?: any) => {
   const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
@@ -32,16 +41,42 @@ serve(async (req) => {
   try {
     logStep("Function started");
 
-    const { sessionId } = await req.json();
-    logStep("Session ID received", { sessionId });
+    // Parse and validate input
+    const rawBody = await req.json();
+    const parseResult = VerifyPaymentSchema.safeParse(rawBody);
+    
+    if (!parseResult.success) {
+      logStep("Validation failed", { errors: parseResult.error.errors });
+      return new Response(
+        JSON.stringify({ error: "Invalid session ID." }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+    
+    const { sessionId } = parseResult.data;
+    logStep("Session ID validated", { sessionId });
 
-    if (!sessionId) throw new Error("Session ID is required");
-
-    const authHeader = req.headers.get("Authorization")!;
+    // Authenticate user
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "Authentication required." }),
+        { status: 401, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+    
     const token = authHeader.replace("Bearer ", "");
-    const { data } = await supabaseClient.auth.getUser(token);
+    const { data, error: authError } = await supabaseClient.auth.getUser(token);
+    
+    if (authError || !data.user) {
+      logStep("Authentication failed");
+      return new Response(
+        JSON.stringify({ error: "Authentication required." }),
+        { status: 401, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+    
     const user = data.user;
-    if (!user) throw new Error("User not authenticated");
     logStep("User authenticated", { userId: user.id });
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
@@ -61,7 +96,10 @@ serve(async (req) => {
 
       if (updateError) {
         logStep("Error updating profile", { error: updateError.message });
-        throw new Error("Failed to update premium status");
+        return new Response(
+          JSON.stringify({ error: "Failed to activate premium status." }),
+          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
       }
 
       logStep("Premium status updated successfully", { userId: user.id });
@@ -87,9 +125,10 @@ serve(async (req) => {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR", { message: errorMessage });
-    return new Response(JSON.stringify({ error: errorMessage }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 500,
-    });
+    // Return generic error message to client
+    return new Response(
+      JSON.stringify({ error: "An error occurred. Please try again later." }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
   }
 });
