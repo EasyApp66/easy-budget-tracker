@@ -39,6 +39,10 @@ export function EditModal({ isOpen, onClose, onSave, title, currentValue, type }
       cancel: 'Cancelar',
       save: 'Salvar',
     },
+    JA: {
+      cancel: 'キャンセル',
+      save: '保存',
+    },
   };
 
   const t = content[language];

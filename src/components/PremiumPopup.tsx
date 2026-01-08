@@ -120,6 +120,19 @@ export function PremiumPopup() {
       pay: 'Pagar',
       or: 'OU',
     },
+    JA: {
+      title: 'プレミアムを購入',
+      subtitle: '無制限の機能を取得:',
+      features: [
+        '無制限のサブスクカウンター',
+        '無制限の支出リスト',
+        '無制限の月',
+      ],
+      oneTime: '一回払い',
+      monthly: '月額サブスク',
+      pay: '支払う',
+      or: 'または',
+    },
   };
 
   const t = content[language];
@@ -180,7 +193,7 @@ export function PremiumPopup() {
           {/* Monthly */}
           <div className="border-2 border-primary rounded-2xl p-4">
             <p className="font-bold text-lg">{t.monthly}</p>
-            <p className="text-primary text-xl font-bold mb-3">CHF 1.00/{language === 'DE' ? 'Monat' : language === 'EN' ? 'month' : language === 'FR' ? 'mois' : language === 'IT' ? 'mese' : language === 'ES' ? 'mes' : 'mês'}</p>
+            <p className="text-primary text-xl font-bold mb-3">CHF 1.00/{language === 'DE' ? 'Monat' : language === 'EN' ? 'month' : language === 'FR' ? 'mois' : language === 'IT' ? 'mese' : language === 'ES' ? 'mes' : language === 'PT' ? 'mês' : '月'}</p>
             <button 
               onClick={() => handleCheckout(PRICES.monthly, 'subscription', setLoadingMonthly)}
               disabled={loadingOneTime || loadingMonthly}

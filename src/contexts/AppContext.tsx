@@ -41,8 +41,8 @@ interface AppContextType {
   updateUsername: (username: string) => Promise<void>;
   
   // Language
-  language: 'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT';
-  setLanguage: (lang: 'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT') => void;
+  language: 'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT' | 'JA';
+  setLanguage: (lang: 'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT' | 'JA') => void;
   
   // Months & Expenses
   months: Month[];
@@ -90,9 +90,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [language, setLanguageState] = useState<'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT'>(() => {
+  const [language, setLanguageState] = useState<'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT' | 'JA'>(() => {
     const saved = localStorage.getItem('app_language');
-    return (saved as 'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT') || 'DE';
+    return (saved as 'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT' | 'JA') || 'DE';
   });
   const [months, setMonths] = useState<Month[]>([]);
   const [activeMonthId, setActiveMonthIdState] = useState<string | null>(null);
@@ -174,7 +174,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       })));
 
       if (settingsData) {
-        const dbLanguage = settingsData.language as 'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT';
+        const dbLanguage = settingsData.language as 'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT' | 'JA';
         setLanguageState(dbLanguage);
         localStorage.setItem('app_language', dbLanguage);
         setActiveMonthIdState(settingsData.active_month_id);
@@ -302,7 +302,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const setLanguage = async (newLang: 'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT') => {
+  const setLanguage = async (newLang: 'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT' | 'JA') => {
     setLanguageState(newLang);
     localStorage.setItem('app_language', newLang);
     

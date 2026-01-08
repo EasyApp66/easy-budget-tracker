@@ -133,6 +133,23 @@ export default function Abos() {
       cancel: 'Cancelar',
       amount: 'Valor',
     },
+    JA: {
+      aboCosts: 'サブスク費用',
+      total: '合計',
+      noAbos: 'サブスクがありません',
+      addHint: '+をタップして追加',
+      swipeHint: '← スワイプで削除 • スワイプで固定 →',
+      newAbo: '新しいサブスク',
+      namePlaceholder: '名前（例：Netflix）',
+      editName: '名前を編集',
+      editAmount: '金額を編集',
+      duplicate: '複製',
+      unpin: '固定解除',
+      pin: '固定',
+      delete: '削除',
+      cancel: 'キャンセル',
+      amount: '金額',
+    },
   };
 
   const t = content[language];

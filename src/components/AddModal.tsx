@@ -48,6 +48,11 @@ export function AddModal({ isOpen, onClose, onAdd, title, namePlaceholder, amoun
       cancel: 'Cancelar',
       add: 'Adicionar',
     },
+    JA: {
+      amount: '金額',
+      cancel: 'キャンセル',
+      add: '追加',
+    },
   };
 
   const t = content[language];

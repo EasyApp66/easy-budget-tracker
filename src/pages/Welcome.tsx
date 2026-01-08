@@ -114,6 +114,23 @@ export default function Welcome() {
       agb: 'Termos e Condições',
       readText: '.',
     },
+    JA: {
+      hello: 'こんにちは！私は',
+      track: '管理しよう',
+      your: 'あなたの',
+      budget: '予算',
+      andYour: 'そして',
+      abos: 'サブスク',
+      emailButton: 'メールで続ける',
+      appleButton: 'Appleで続ける',
+      googleButton: 'Googleで続ける',
+      footer: '続けることで、',
+      termsOfUse: '利用規約',
+      and: 'と',
+      privacy: 'プライバシーポリシー',
+      agb: '契約条件',
+      readText: 'を読んだことを確認します。',
+    },
   };
 
   const t = content[language];
