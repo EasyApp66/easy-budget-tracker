@@ -92,7 +92,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [language, setLanguageState] = useState<'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT' | 'JA'>(() => {
     const saved = localStorage.getItem('app_language');
-    return (saved as 'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT' | 'JA') || 'DE';
+    if (saved) {
+      return saved as 'DE' | 'EN' | 'FR' | 'IT' | 'ES' | 'PT' | 'JA';
+    }
+    
+    // Auto-detect browser language for new users
+    const browserLang = navigator.language.toLowerCase();
+    if (browserLang.startsWith('de')) return 'DE';
+    if (browserLang.startsWith('fr')) return 'FR';
+    if (browserLang.startsWith('it')) return 'IT';
+    if (browserLang.startsWith('es')) return 'ES';
+    if (browserLang.startsWith('pt')) return 'PT';
+    if (browserLang.startsWith('ja')) return 'JA';
+    if (browserLang.startsWith('en')) return 'EN';
+    
+    return 'EN'; // Default to English for unsupported languages
   });
   const [months, setMonths] = useState<Month[]>([]);
   const [activeMonthId, setActiveMonthIdState] = useState<string | null>(null);
