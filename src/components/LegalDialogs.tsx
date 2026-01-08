@@ -221,6 +221,40 @@ export function AGBDialog({ open, onOpenChange }: LegalDialogProps) {
         },
       ],
     },
+    JA: {
+      title: '利用規約',
+      date: '最終更新日：2025年1月',
+      sections: [
+        {
+          title: "1. 適用範囲",
+          text: 'この利用規約は、Easy Budgetアプリ（以下「アプリ」）の使用に適用されます。アプリを使用することで、これらの規約に完全に同意したことになります。',
+        },
+        {
+          title: '2. 契約の対象',
+          text: "アプリは、ユーザーが個人の予算を管理し、支出とサブスクリプションを追跡できるようにします。アプリは無料の基本版と有料のプレミアム版で提供されています。",
+        },
+        {
+          title: '3. 登録とユーザーアカウント',
+          text: "アプリを使用するには登録が必要です。ユーザーは正確な情報を提供し、ログイン資格情報を機密に保つ義務があります。",
+        },
+        {
+          title: '4. プレミアム機能',
+          text: 'プレミアム版は、無制限の月、支出、サブスクリプションなどの拡張機能を提供します。価格と支払い条件は購入前に透明に表示されます。',
+        },
+        {
+          title: '5. 責任',
+          text: "アプリの使用は自己責任で行ってください。重大な過失または故意の場合を除き、誤ったデータ入力や技術的な中断によって生じた損害について当社は責任を負いません。",
+        },
+        {
+          title: '6. 規約の変更',
+          text: "当社は、いつでもこれらの規約を変更する権利を留保します。変更はユーザーに適時通知されます。アプリの継続使用は、変更された規約の承諾を構成します。",
+        },
+        {
+          title: '7. 準拠法および管轄',
+          text: 'スイス法が適用されます。管轄地はスイス、チューリッヒです。',
+        },
+      ],
+    },
   };
 
   const t = content[language];
@@ -429,6 +463,36 @@ export function NutzungsbedingungenDialog({ open, onOpenChange }: LegalDialogPro
         {
           title: '6. Alterações',
           text: "Reservamo-nos o direito de modificar estes termos conforme necessário. Alterações significativas serão comunicadas aos usuários.",
+        },
+      ],
+    },
+    JA: {
+      title: "利用条件",
+      date: '最終更新日：2025年1月',
+      sections: [
+        {
+          title: "1. 使用権",
+          text: "登録することで、Easy Budgetアプリを個人的かつ非商業的な目的で使用するための非独占的かつ譲渡不可能な権利を取得します。",
+        },
+        {
+          title: "2. ユーザーの義務",
+          text: "ユーザーは、アプリを悪用しないこと、違法なコンテンツを保存しないこと、技術的保護措置を回避しないことに同意します。",
+        },
+        {
+          title: '3. 可用性',
+          text: "アプリの高可用性を目指していますが、中断のない可用性を保証することはできません。メンテナンス作業は可能な限り事前に告知されます。",
+        },
+        {
+          title: '4. データ保存',
+          text: "ユーザーが入力したデータは、ユーザーのデバイスにローカルに保存されます。ユーザーは自分のデータのバックアップに責任を負います。",
+        },
+        {
+          title: '5. 終了',
+          text: "ユーザーはいつでも自分のアカウントを削除できます。これらの規約に違反した場合、アプリへのアクセスをブロックする権利を留保します。",
+        },
+        {
+          title: '6. 変更',
+          text: "必要に応じてこれらの規約を変更する権利を留保します。重要な変更はユーザーに通知されます。",
         },
       ],
     },
@@ -673,6 +737,41 @@ export function DatenschutzDialog({ open, onOpenChange }: LegalDialogProps) {
         },
       ],
     },
+    JA: {
+      title: 'プライバシーポリシー',
+      date: '最終更新日：2025年1月',
+      sections: [
+        {
+          title: '1. 責任者',
+          text: 'Ivan Mirosnic\nAhornstrasse\n8600 Dübendorf\nスイス',
+        },
+        {
+          title: '2. 収集するデータ',
+          text: "ログインデータ（メールアドレスとパスワード）のみを収集します。その他の個人データは収集または保存されません。",
+          highlight: true,
+        },
+        {
+          title: '3. ローカルデータ保存',
+          text: "すべての予算データ、支出、サブスクリプションは、お客様のデバイスにのみ保存されます。これらのデータは当社のサーバーに送信されません。",
+        },
+        {
+          title: "4. 使用目的",
+          text: "ログインデータは、認証とアプリへのアクセスのみに使用されます。",
+        },
+        {
+          title: '5. データ共有',
+          text: '法律で義務付けられている場合を除き、お客様のデータを第三者と共有することはありません。',
+        },
+        {
+          title: '6. お客様の権利',
+          text: "スイスのデータ保護法（LPD）に基づき、データへのアクセス、修正、削除の権利があります。support@easybudget.appまでお問い合わせください。",
+        },
+        {
+          title: '7. データセキュリティ',
+          text: "スイスのデータ保護法の要件に従って、お客様のデータを保護するための適切な技術的および組織的措置を実施しています。",
+        },
+      ],
+    },
   };
 
   const t = content[language];
@@ -877,6 +976,35 @@ export function ImpressumDialog({ open, onOpenChange }: LegalDialogProps) {
         {
           title: 'Lei aplicável',
           text: "Aplica-se exclusivamente a lei suíça. O foro competente é Zurique.",
+        },
+      ],
+    },
+    JA: {
+      title: '会社概要',
+      sections: [
+        {
+          title: 'スイス法に基づく情報',
+          text: '',
+        },
+        {
+          title: "アプリ運営者",
+          text: 'Ivan Mirosnic\nAhornstrasse\n8600 Dübendorf\nスイス',
+        },
+        {
+          title: 'お問い合わせ',
+          text: 'Email: support@easybudget.app',
+        },
+        {
+          title: '免責事項',
+          text: "著者は、情報の正確性、精度、適時性、信頼性、完全性について責任を負いません。\n\n公開された情報へのアクセスまたは使用または不使用から生じる物質的または非物質的な損害に対する著者への責任請求は除外されます。",
+        },
+        {
+          title: "著作権",
+          text: "アプリ内のコンテンツ、画像、写真、その他のファイルに関する著作権およびその他すべての権利は、Ivan Mirosnicまたは特定の権利者に独占的に帰属します。",
+        },
+        {
+          title: '準拠法',
+          text: "スイス法のみが適用されます。管轄地はチューリッヒです。",
         },
       ],
     },

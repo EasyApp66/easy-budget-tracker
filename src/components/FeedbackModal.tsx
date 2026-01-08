@@ -66,6 +66,14 @@ export function FeedbackModal({ isOpen, onClose, type }: FeedbackModalProps) {
       success: 'Mensagem enviada!',
       error: 'Erro ao enviar',
     },
+    JA: {
+      support: { title: 'サポートリクエスト', placeholder: '問題を説明してください...' },
+      bug: { title: 'バグを報告', placeholder: 'バグを説明してください...' },
+      suggestion: { title: '提案', placeholder: 'アイデアを共有してください...' },
+      send: '送信',
+      success: 'メッセージが送信されました！',
+      error: '送信エラー',
+    },
   };
 
   const t = content[language];

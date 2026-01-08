@@ -74,6 +74,15 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
       error: 'Erro ao iniciar o pagamento',
       minAmount: 'O valor mínimo é CHF 1.00',
     },
+    JA: {
+      title: '寄付する',
+      subtitle: 'アプリの開発をサポート',
+      custom: 'カスタム金額',
+      donate: '寄付',
+      thanks: 'ありがとうございます！❤️',
+      error: '支払いの開始エラー',
+      minAmount: '最低金額はCHF 1.00です',
+    },
   };
 
   const t = content[language];

@@ -48,6 +48,12 @@ export default function PaymentSuccess() {
       premiumActive: 'Seu status premium agora está ativo.',
       backToApp: 'Voltar ao app',
     },
+    JA: {
+      verifying: '支払いを確認中...',
+      success: '支払いが完了しました！',
+      premiumActive: 'プレミアムステータスがアクティブになりました。',
+      backToApp: 'アプリに戻る',
+    },
   };
 
   const t = content[language];

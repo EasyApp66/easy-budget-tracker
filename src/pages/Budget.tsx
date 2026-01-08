@@ -175,6 +175,28 @@ export default function Budget() {
       editTitle: 'Editar título',
       amount: 'Valor',
     },
+    JA: {
+      total: '合計',
+      remaining: '残り',
+      noExpenses: '支出がありません',
+      addExpenseHint: '+をタップして追加',
+      noMonth: '月が選択されていません',
+      createMonthHint: '月を作成して開始',
+      newExpense: '新しい支出',
+      expensePlaceholder: '名前（例：食費）',
+      newEntry: '新しいエントリ',
+      monthPlaceholder: '名前（例：1月）',
+      editName: '名前を編集',
+      duplicate: '複製',
+      unpin: '固定解除',
+      pin: '固定',
+      delete: '削除',
+      cancel: 'キャンセル',
+      editAmount: '金額を編集',
+      editBudget: '予算を編集',
+      editTitle: 'タイトルを編集',
+      amount: '金額',
+    },
   };
 
   const t = content[language];
